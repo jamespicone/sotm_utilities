@@ -8,7 +8,7 @@ using Handelabra.Sentinels.Engine.Model;
 
 namespace Jp.SOTMUtilities
 {
-    static class ExtensionMethods
+    public static class ExtensionMethods
     {
         public static CardAlignmentHelper Is(this Card c, CardController controller = null)
         {

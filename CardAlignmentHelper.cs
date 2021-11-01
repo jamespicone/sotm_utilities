@@ -109,9 +109,9 @@ namespace Jp.SOTMUtilities
 
         public static implicit operator bool(CardAlignmentHelper helper)
         {
-            if (!helper.alignment.HasValue)
+            if (helper.alignment == CardAlignment.Villain && helper.controller == null)
             {
-                throw new InvalidOperationException("CardAlignmentHelper without alignment converted to bool");
+                throw new InvalidOperationException("CardAlignmentHelper with villain alignment without controller converted to bool (Missing AccordingTo?)");
             }
 
             if (helper.card != null)
