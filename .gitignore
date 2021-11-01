@@ -1,0 +1,6 @@
+.vs/
+bin/
+obj/
+packages/
+*.snk
+*.csproj.user
