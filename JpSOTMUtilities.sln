@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpSOTMUtilities", "JpSOTMUtilities.csproj", "{6745D201-0246-484B-A7C3-A0D2D8821A21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpSOTMUtilitiesTests", "JpSOTMUtilitiesTests\JpSOTMUtilitiesTests.csproj", "{008243AA-4015-4D36-9615-A9187E5435EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6745D201-0246-484B-A7C3-A0D2D8821A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6745D201-0246-484B-A7C3-A0D2D8821A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6745D201-0246-484B-A7C3-A0D2D8821A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{008243AA-4015-4D36-9615-A9187E5435EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008243AA-4015-4D36-9615-A9187E5435EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008243AA-4015-4D36-9615-A9187E5435EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008243AA-4015-4D36-9615-A9187E5435EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
