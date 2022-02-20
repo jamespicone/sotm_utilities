@@ -1,74 +1,74 @@
 {
-  "name": "Alignment Test Environment",
-  "kind": "Environment",
+  "name": "Alignment Test Villain",
+  "kind": "Villain",
   "backgroundColor": "",
   "difficulty": 1,
   "cards": [
     {
-      "identifier": "EnvOwnedEnvCard",
+      "identifier": "VillainOwnedEnvCard",
       "count": 1,
-      "title": "EnvOwnedEnvCard",
+      "title": "VillainOwnedEnvCard",
       "body": [ "This is an environment card" ],
       "kind": "Environment"
     },
     {
-      "identifier": "EnvOwnedHeroCard",
+      "identifier": "VillainOwnedHeroCard",
       "count": 1,
-      "title": "EnvOwnedHeroCard",
+      "title": "VillainOwnedHeroCard",
       "body": [ "This is a hero card" ],
       "kind": "Hero"
     },
     {
-      "identifier": "EnvOwnedVillainCard",
+      "identifier": "VillainOwnedVillainCard",
       "count": 1,
-      "title": "EnvOwnedVillainCard",
+      "title": "VillainOwnedVillainCard",
       "body": [ "This is a villain card" ],
       "kind": "Villain"
     },
     {
-      "identifier": "EnvOwnedEnvTargetEnvCard",
+      "identifier": "VillainOwnedEnvTargetVillainCard",
       "count": 1,
-      "title": "EnvOwnedEnvTargetEnvCard",
+      "title": "VillainOwnedEnvTargetVillainCard",
       "body": [ "" ],
       "targetKind": "Environment",
       "hitpoints": 1
     },
     {
-      "identifier": "EnvOwnedHeroTargetEnvCard",
+      "identifier": "VillainOwnedHeroTargetVillainCard",
       "count": 1,
-      "title": "EnvOwnedHeroTargetEnvCard",
+      "title": "VillainOwnedHeroTargetVillainCard",
       "body": [ "This is a hero target" ],
       "targetKind": "Hero",
       "hitpoints": 1
     },
     {
-      "identifier": "EnvOwnedVillainTargetEnvCard",
+      "identifier": "VillainOwnedVillainTargetVillainCard",
       "count": 1,
-      "title": "EnvOwnedVillainTargetEnvCard",
+      "title": "VillainOwnedVillainTargetVillainCard",
       "body": [ "This is a villain target" ],
       "targetKind": "Villain",
       "hitpoints": 1
     },
     {
-      "identifier": "EnvOwnedEnvTarget",
+      "identifier": "VillainOwnedEnvTarget",
       "count": 1,
-      "title": "EnvOwnedEnvTarget",
+      "title": "VillainOwnedEnvTarget",
       "body": [ "" ],
       "kind": "Environment",
       "hitpoints": 1
     },
     {
-      "identifier": "EnvOwnedHeroTarget",
+      "identifier": "VillainOwnedHeroTarget",
       "count": 1,
-      "title": "EnvOwnedHeroTarget",
+      "title": "VillainOwnedHeroTarget",
       "body": [ "This is a hero card" ],
       "kind": "Hero",
       "hitpoints": 1
     },
     {
-      "identifier": "EnvOwnedVillainTarget",
+      "identifier": "VillainOwnedVillainTarget",
       "count": 1,
-      "title": "EnvOwnedVillainTarget",
+      "title": "VillainOwnedVillainTarget",
       "body": [ "This is a villain card" ],
       "kind": "Villain",
       "hitpoints": 1

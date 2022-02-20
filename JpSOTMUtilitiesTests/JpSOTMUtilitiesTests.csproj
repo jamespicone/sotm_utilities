@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlignmentTests\AlignmentTestVillainTests.cs" />
+    <Compile Include="AlignmentTests\AlignmentTestHeroTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestEnvironmentTests.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,7 +70,25 @@
     <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedVillainCardCardController.cs" />
     <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedHeroCardCardController.cs" />
     <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedEnvCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedEnvCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedEnvTargetCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedEnvTargetHeroCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedHeroCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedHeroTargetCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedHeroTargetHeroCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedVillainCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedVillainTargetCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedVillainTargetHeroCardCardController.cs" />
     <Compile Include="TestMod\TemplateCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedEnvCardCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedEnvTargetCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedEnvTargetVillainCardCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedHeroCardCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedHeroTargetCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedHeroTargetVillainCardCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedVillainCardCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedVillainTargetCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedVillainTargetVillainCardCardController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -79,10 +99,7 @@
       <Name>JpSOTMUtilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestMod\Heroes\" />
-    <Folder Include="TestMod\Villains\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="TestMod\DeckLists\**\*.json">
       <LogicalName>Jp.SOTMUtilities.TestMod.DeckLists.%(EmbeddedResource.FileName).json</LogicalName>
