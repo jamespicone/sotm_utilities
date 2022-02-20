@@ -156,5 +156,24 @@ namespace Jp.SOTMUtilities
                 }
             }
         }
+
+        public static bool IsTurnTakersTurnPriorToOrDuringPhase(this TurnTakerController controller, Phase phase)
+        {
+            if (controller.GameController.ActiveTurnTakerController != controller)
+            {
+                return false;
+            }
+
+            if (controller.GameController.ActiveTurnPhase.Phase == phase)
+            {
+                return true;
+            }
+
+            // If we've changed phases out of a power phase belonging to controller this turn, then
+            // we're after the power phase.
+            return controller.GameController.Game.Journal.PhaseChangeEntriesThisTurn().Where(
+                je => je.FromPhase.Phase == phase && je.FromPhase.TurnTaker == controller.TurnTaker
+            ).Count() == 0;
+        }
     }
 }

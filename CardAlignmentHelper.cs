@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 using Handelabra.Sentinels.Engine.Controller;
 using Handelabra.Sentinels.Engine.Model;
+
+using Handelabra;
 
 namespace Jp.SOTMUtilities
 {
@@ -229,19 +232,45 @@ namespace Jp.SOTMUtilities
                     {
                         case CardAlignment.Hero:
                             if (helper.target == CardTarget.Target) {
-                                hasAlignment = helper.card.TargetKind == DeckDefinition.DeckKind.Hero ||
-                                    (! helper.card.TargetKind.HasValue && helper.card.IsHero);
+                                hasAlignment = (helper.card.TargetKind ?? helper.card.Kind) == DeckDefinition.DeckKind.Hero;
                             }
                             else { hasAlignment = helper.card.IsHero; }
                             break;
                         case CardAlignment.Villain:
                             if (helper.target == CardTarget.Target) {
-                                hasAlignment = helper.controller.GameController.AskCardControllersIfIsVillainTarget(helper.card, helper.controller.GetCardSource());
+
+                                if (cachedAskAllCardControllersInList == null)
+                                {
+                                    var method = helper.controller.GameController.GetType().GetMethod(
+                                        "AskAllCardControllersInList",
+                                        BindingFlags.NonPublic | BindingFlags.Instance
+                                    );
+
+                                    cachedAskAllCardControllersInList = method.MakeGenericMethod(typeof(bool?));
+                                }
+
+                                var result = (bool?)cachedAskAllCardControllersInList.Invoke(
+                                    helper.controller.GameController,
+                                    new object[] {
+                                        CardControllerListType.ModifiesDeckKind,
+                                        (Func<CardController, bool?>)(cc => cc.AskIfIsVillainTarget(helper.card, helper.controller.GetCardSource())),
+                                        true,
+                                        null
+                                    }
+                                );
+
+                                var kind = helper.card.TargetKind ?? helper.card.Kind;
+                                var isVillainDefault = kind == DeckDefinition.DeckKind.Villain ||
+                                    kind == DeckDefinition.DeckKind.VillainTeam;
+
+                                hasAlignment = result.GetValueOrDefault(isVillainDefault);
                             }
                             else { hasAlignment = helper.controller.GameController.AskCardControllersIfIsVillain(helper.card, helper.controller.GetCardSource()); }
                             break;
                         case CardAlignment.Environment:
-                            if (helper.target == CardTarget.Target) { hasAlignment = helper.card.IsEnvironmentTarget; }
+                            if (helper.target == CardTarget.Target) {
+                                hasAlignment = (helper.card.TargetKind ?? helper.card.Kind) == DeckDefinition.DeckKind.Environment;
+                            }
                             else { hasAlignment = helper.card.IsEnvironment; }
                             break;
                         default:
@@ -344,5 +373,7 @@ namespace Jp.SOTMUtilities
 
         private List<string> expectedKeywords = new List<string>();
         private List<string> unwantedKeywords = new List<string>();
+
+        private static MethodInfo cachedAskAllCardControllersInList = null;
     }
 }

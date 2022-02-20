@@ -55,8 +55,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlignmentHelperTests.cs" />
+    <Compile Include="AlignmentTests\AlignmentTestEnvironmentTests.cs" />
+    <Compile Include="BaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setup.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedEnvTargetEnvCardCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedHeroTargetEnvCardCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedHeroTargetCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedEnvTargetCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedVillainTargetEnvCardCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedVillainTargetCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedVillainCardCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedHeroCardCardController.cs" />
+    <Compile Include="TestMod\Environments\AlignmentTestEnvironment\EnvOwnedEnvCardCardController.cs" />
+    <Compile Include="TestMod\TemplateCardController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -67,6 +79,15 @@
       <Name>JpSOTMUtilities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestMod\Heroes\" />
+    <Folder Include="TestMod\Villains\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestMod\DeckLists\**\*.json">
+      <LogicalName>Jp.SOTMUtilities.TestMod.DeckLists.%(EmbeddedResource.FileName).json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -76,5 +97,9 @@
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.4.2.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.4.2.0\build\net35\NUnit3TestAdapter.props'))" />
     <Error Condition="!Exists('..\packages\ILRepack.2.0.18\build\ILRepack.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.2.0.18\build\ILRepack.props'))" />
     <Error Condition="!Exists('..\packages\ILRepack.MSBuild.Task.2.0.13\build\ILRepack.MSBuild.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.MSBuild.Task.2.0.13\build\ILRepack.MSBuild.Task.props'))" />
+  </Target>
+  <Target Name="RepackSOTMUtilities" AfterTargets="Build">
+    <Message Text="Calling ILRepack" Importance="high" />
+    <ILRepack OutputType="$(OutputType)" MainAssembly="$(TargetFileName)" OutputAssembly="$(TargetFileName)" InputAssemblies="JpSOTMUtilities.dll" WorkingDirectory="$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)" />
   </Target>
 </Project>
