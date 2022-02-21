@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IsTurnTakersTurnPriorToOrDuringPhaseTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestVillainTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestHeroTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestEnvironmentTests.cs" />
