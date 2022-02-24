@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 using Handelabra.Sentinels.Engine.Controller;
 using Handelabra.Sentinels.Engine.Model;
@@ -11,6 +12,17 @@ namespace Jp.SOTMUtilities
 {
     public static class ExtensionMethods
     {
+        // Shows a critical message with the version of the utility library in it.
+        public static IEnumerator ShowVersionMessage(this CardController co)
+        {
+            var assembly = typeof(CardAlignmentHelper).Assembly;
+            return co.GameController.SendMessageAction(
+                $"JpSOTMUtilities version {assembly.GetName().Version}",
+                Priority.Critical,
+                co.GetCardSource()
+            );
+        }
+
         // Helper for checking card properties.
         // You can pass a CardController to use when checking card properties such as villain-ness
         // or card keywords.
@@ -58,15 +70,18 @@ namespace Jp.SOTMUtilities
             }
         }
 
-        public static IEnumerator ShowVersionMessage(this CardController co)
-        {
-            return co.GameController.SendMessageAction(
-                "Version 1",
-                Priority.Critical,
-                co.GetCardSource()
-            );
-        }
-
+        // Helper to have every target in play that meets criteria 'damageDealerCriteria' deal 'amount'
+        // damage of type 'damageType' to one target meeting criteria 'targetCriteria'.
+        //
+        // 'decisionMaker' is the player making decisions about ordering and which target will be damaged,
+        // or null if all players make the decision jointly.
+        //
+        // New potential damageDealers entering play after this coroutine has started (for example, targets
+        // that entered play in response to damage dealt because of this coroutine) will also deal damage.
+        //
+        // 'damageDealerCriteria' has an implicit "in play", but NOT an implicit "is a target". 'targetCriteria'
+        // has an implicit "in play" and "is target". Note that non-target cards can deal damage (for example, 
+        // Primordial Plant Life in Insula Primalis).
         public static IEnumerator SelectTargetsToDealDamageToTarget(
             this CardController c,
             HeroTurnTakerController decisionMaker,
@@ -93,6 +108,17 @@ namespace Jp.SOTMUtilities
             );
         }
 
+        // Helper to have every target in play that meets criteria 'damageDealerCriteria' do something
+        // in a player-determined order, typically do damage to another target (hence the name).
+        // 'damageFunc' will be run for each target selected as they're picked.
+        //
+        // 'decisionMaker' is the player making decisions about ordering and which target will be damaged,
+        // or null if all players make the decision jointly.
+        //
+        // New potential damageDealers entering play after this coroutine has started (for example, targets
+        // that entered play in response to damage dealt because of this coroutine) will also run damageFunc.
+        //
+        // 'damageDealerCriteria' has an implicit "is in play" criteria but no others.
         public static IEnumerator SelectTargetsToDealDamageToTarget(
             this CardController c,
             HeroTurnTakerController decisionMaker,
@@ -157,6 +183,24 @@ namespace Jp.SOTMUtilities
             }
         }
 
+        // Returns true if:
+        // - The currently active turn taker is `controller` AND,
+        // - Either,
+        //      - The currently-active phase is `phase` OR
+        //      - Phase 'phase' hasn't happened yet this turn.
+        //
+        // This is useful because effects that grant additional plays or power
+        // uses that occur after the relevant phase or on a different turn grant
+        // immediate plays/power uses. The base game mechanism for determining this
+        // does not take into account unusual turn orders.
+        //
+        // Note: This function will not work correctly for unusual turn orders in
+        // ephemeral turns, e.g. La Comodora with Concordant Helm out hit by Completionist
+        // Guise's immediate-turn incap. This is because of limitations of the engine
+        // I haven't come up with a good workaround for. The behaviour in that case will
+        // be the same as the base game mechanism - if the phase you're in would 'normally'
+        // come before the requested phase, we're prior to it, even if we've already performed
+        // the requested phase.
         public static bool IsTurnTakersTurnPriorToOrDuringPhase(this TurnTakerController controller, Phase phase)
         {
             if (controller.GameController.ActiveTurnTakerController != controller)
