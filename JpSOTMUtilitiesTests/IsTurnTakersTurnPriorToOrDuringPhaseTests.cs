@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Text;
 using NUnit.Framework;
 
 using Handelabra.Sentinels.Engine.Model;
+using Handelabra.Sentinels.Engine.Controller;
 using Handelabra.Sentinels.UnitTest;
 
 namespace Jp.SOTMUtilities.UnitTest
@@ -172,6 +174,75 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
             Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
             Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+        }
+
+        Phase expectedPhase = Phase.Start;
+        private IEnumerator CheckEphemeralPhases(GameAction action)
+        {
+            if (! (action is PhaseChangeAction)) { yield break; }
+
+            Handelabra.Log.Debug(action.ToString());
+            lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start);
+            switch (expectedPhase)
+            {
+                case Phase.Start:
+                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+                    expectedPhase = Phase.PlayCard;
+                    break;
+                case Phase.PlayCard:
+                    Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+                    expectedPhase = Phase.End;
+                    break;
+                case Phase.End:
+                    Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+                    Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+                    break;
+            }
+
+            yield break;
+        }
+
+        [Test()]
+        public void TestEphemeralTurns()
+        {
+            SetupGameController("LaCapitanTeam", "Legacy", "Megalopolis");
+
+            RemoveVillainTriggers();
+            RemoveVillainCards();
+
+            StartGame();
+
+            var stich = PlayCard("StitchInTime");
+
+            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+
+            EnterNextTurnPhase();
+
+            Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+
+            EnterNextTurnPhase();
+
+            Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+
+            expectedPhase = Phase.Start;
+            GameController.OnDidPerformAction += CheckEphemeralPhases;
+
+            DestroyCard(stich);
+
+            GameController.OnDidPerformAction -= CheckEphemeralPhases;            
+
+            EnterNextTurnPhase();
         }
     }
 }

@@ -169,11 +169,27 @@ namespace Jp.SOTMUtilities
                 return true;
             }
 
-            // If we've changed phases out of a power phase belonging to controller this turn, then
-            // we're after the power phase.
-            return controller.GameController.Game.Journal.PhaseChangeEntriesThisTurn().Where(
-                je => je.FromPhase.Phase == phase && je.FromPhase.TurnTaker == controller.TurnTaker
-            ).Count() == 0;
+            if (controller.GameController.Game.ActiveTurnPhase.IsEphemeral)
+            {
+                // Ephemeral phase changes are not recorded in the journal.
+                // There's not currently a good way I know of to track what
+                // phases have happened in an ephemeral turn. The base game
+                // gets it wrong too. Just implementing the simple and mostly
+                // correct version here until there's a better solution.
+                //
+                // If the active turn phase is before the tested phase, then
+                // we haven't had the tested phase yet (unless we've got a weird
+                // turn order...)
+                return controller.GameController.ActiveTurnPhase.Phase < phase;
+            }
+            else
+            {
+                // If we've changed phases out of a power phase belonging to controller this turn, then
+                // we're after the power phase.
+                return controller.GameController.Game.Journal.PhaseChangeEntriesThisTurn().Where(
+                    je => je.FromPhase?.Phase == phase && je.FromPhase?.TurnTaker == controller.TurnTaker
+                ).Count() == 0;
+            }
         }
     }
 }
