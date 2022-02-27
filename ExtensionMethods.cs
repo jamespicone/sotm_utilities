@@ -132,7 +132,7 @@ namespace Jp.SOTMUtilities
 
             while (true)
             {
-                var selectable = c.GameController.FindCardsWhere(card => card.IsInPlay && damageDealerCriteria(card), true, c.GetCardSource()).Except(alreadySelected);
+                var selectable = c.GameController.FindCardsWhere(card => card.IsInPlay && damageDealerCriteria(card), true, c.GetCardSource()).Except(alreadySelected, new TargetEqualityComparer());
                 if (selectable.Count() <= 0) { break; }
 
                 Card selectedDamageDealer;
