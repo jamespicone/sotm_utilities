@@ -7,11 +7,14 @@
     <authors>James Picone</authors>
     <owners>jamesp</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">BSD</license>
+    <license type="expression">BSD-2-Clause</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/jamespicone/sotm_utilities</projectUrl>
     <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>Initial release.</releaseNotes>
     <copyright>$copyright$</copyright>
-  </metadata>
+    <dependencies>
+      <group targetFramework=".NETFramework3.5" />
+    </dependencies>
+  </metadata>  
 </package>

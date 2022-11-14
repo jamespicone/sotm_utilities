@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="JpSOTMUtilities.nuspec" />
     <None Include="README.md" />
     <None Include="sotm_key.snk" />
   </ItemGroup>

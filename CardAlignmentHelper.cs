@@ -78,6 +78,20 @@ namespace Jp.SOTMUtilities
             controller = _controller;
         }
 
+        // Is specifically sourced from a card. Excludes TurnTakers (does not exclude targets)
+        public CardAlignmentHelper Card()
+        {
+            isCard = true;
+            return this;
+        }
+
+        // Is sourced from a TurnTaker. Excludes cards.
+        public CardAlignmentHelper Noncard()
+        {
+            isCard = false;
+            return this;
+        }
+
         // Is specifically a target. Excludes TurnTakers as well as non-target cards.
         public CardAlignmentHelper Target()
         {
@@ -224,6 +238,11 @@ namespace Jp.SOTMUtilities
 
             if (helper.card != null)
             {
+                if (helper.isCard == false)
+                {
+                    return false;
+                }
+
                 bool hasAlignment = true;
                 if (helper.alignment.HasValue)
                 {
@@ -314,6 +333,11 @@ namespace Jp.SOTMUtilities
 
             if (helper.turntaker != null)
             {
+                if (helper.isCard == true)
+                {
+                    return false;
+                }
+
                 if (helper.target == CardTarget.Target)
                 {
                     return false;
@@ -370,6 +394,7 @@ namespace Jp.SOTMUtilities
         private CardAlignment? alignment;
         private CardTarget target = CardTarget.Either;
         private bool? character = null;
+        private bool? isCard = null;
 
         private List<string> expectedKeywords = new List<string>();
         private List<string> unwantedKeywords = new List<string>();
