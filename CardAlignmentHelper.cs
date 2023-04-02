@@ -504,7 +504,12 @@ namespace Jp.SOTMUtilities
 
     public class CardAlignmentHelperNeedsController : CardAlignmentHelperBase<CardAlignmentHelperNeedsController, CardAlignmentHelperNeedsController, CardAlignmentHelperWithController>
     {
-
+        // You have used a method on CardAlignmentHelper that requires you to provide a card controller with AccordingTo
+        [Obsolete("You have used a method on CardAlignmentHelper that requires providing a CardController with AccordingTo, but have not provided a controller", true)]
+        public static implicit operator bool(CardAlignmentHelperNeedsController helper)
+        {
+            throw new InvalidOperationException("Called unimplemented CardAlignmentHelperNeedsController.operator bool");
+        }
     };
 
     public class CardAlignmentHelperImpl : CardAlignmentHelperBase<CardAlignmentHelperImpl, CardAlignmentHelperNeedsController, CardAlignmentHelperWithController>
