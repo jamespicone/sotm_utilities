@@ -231,7 +231,7 @@ namespace Jp.SOTMUtilities
                     switch (baseAlignment)
                     {
                         case CardAlignment.Hero:
-                            hasBaseAlignment = turntaker.IsHero;
+                            hasBaseAlignment = controller.IsHero(turntaker);
                             break;
 
                         case CardAlignment.Villain:
@@ -460,6 +460,22 @@ namespace Jp.SOTMUtilities
             return ret;
         }
 
+        // Requires that the card is ongoing.
+        //
+        // Syntactic sugar for WithKeyword("ongoing")
+        public NeedControllerType Ongoing()
+        {
+            return WithKeyword("ongoing");
+        }
+
+        // Requires that the card is equipment.
+        //
+        // Syntactic sugar for WithKeyword("equipment")
+        public NeedControllerType Equipment()
+        {
+            return WithKeyword("equipment");
+        }
+
         // Specifies a CardController that is doing the asking.
         // This is necessary for Villain, NonVillain, WithKeyword and WithoutKeyword.
         //
@@ -532,6 +548,4 @@ namespace Jp.SOTMUtilities
             return helper.ConvertToBool();
         }
     };
-
-    
 }

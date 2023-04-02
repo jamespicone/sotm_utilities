@@ -442,5 +442,39 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
             Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
+
+        [Test()]
+        public void TestOngoing()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestHero");
+
+            var card = GetCard("HeroOngoing");
+            var controller = GetCardController(card);
+
+            Assert.IsTrue(card.Is().Ongoing().AccordingTo(controller));
+            Assert.IsTrue(card.Is().Hero().Ongoing().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().Ongoing().AccordingTo(controller));
+
+            Assert.IsFalse(card.Is().Equipment().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().Equipment().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().Equipment().AccordingTo(controller));
+        }
+
+        [Test()]
+        public void TestEquipment()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestHero");
+
+            var card = GetCard("HeroEquipment");
+            var controller = GetCardController(card);
+
+            Assert.IsFalse(card.Is().Ongoing().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().Ongoing().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().Ongoing().AccordingTo(controller));
+
+            Assert.IsTrue(card.Is().Equipment().AccordingTo(controller));
+            Assert.IsTrue(card.Is().Hero().Equipment().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().Equipment().AccordingTo(controller));
+        }
     }
 }
