@@ -11,7 +11,7 @@
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/jamespicone/sotm_utilities</projectUrl>
     <description>$description$</description>
-    <releaseNotes>Added some minor new functionality for CardAlignmentHelper. Made CardAlignmentHelper refuse to convert to bool if a controller wasn't provided. Update to Net4.8 for the new release of SOTM.</releaseNotes>
+    <releaseNotes>Added Ongoing and Equipment syntactic sugar to CardAlignmentHelper. Fix bug where CardAlignmentHelper didn't call the ask method for turntakers checked for hero-ness.</releaseNotes>
     <copyright>$copyright$</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.8" />
