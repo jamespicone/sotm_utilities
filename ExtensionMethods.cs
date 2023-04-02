@@ -15,7 +15,7 @@ namespace Jp.SOTMUtilities
         // Shows a critical message with the version of the utility library in it.
         public static IEnumerator ShowVersionMessage(this CardController co)
         {
-            var assembly = typeof(CardAlignmentHelper).Assembly;
+            var assembly = typeof(CardAlignmentHelperImpl).Assembly;
             return co.GameController.SendMessageAction(
                 $"JpSOTMUtilities version {assembly.GetName().Version}",
                 Priority.Critical,
@@ -26,31 +26,31 @@ namespace Jp.SOTMUtilities
         // Helper for checking card properties.
         // You can pass a CardController to use when checking card properties such as villain-ness
         // or card keywords.
-        public static CardAlignmentHelper Is(this Card c, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this Card c, CardController controller = null)
         {
-            return new CardAlignmentHelper(c, controller);
+            return new CardAlignmentHelperImpl(c, controller);
         }
 
         // Helper for checking card properties.
         // You can pass a CardController to use when checking card properties such as villain-ness
         // or card keywords.
-        public static CardAlignmentHelper Is(this CardController c, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this CardController c, CardController controller = null)
         {
-            return new CardAlignmentHelper(c.Card, controller);
+            return new CardAlignmentHelperImpl(c.Card, controller);
         }
 
         // Helper for checking TurnTaker properties.
         // You can pass a CardController to use when checking villain-ness
-        public static CardAlignmentHelper Is(this TurnTaker t, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this TurnTaker t, CardController controller = null)
         {
-            return new CardAlignmentHelper(t, controller);
+            return new CardAlignmentHelperImpl(t, controller);
         }
 
         // Helper for checking TurnTaker properties.
         // You can pass a CardController to use when checking villain-ness
-        public static CardAlignmentHelper Is(this TurnTakerController t, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this TurnTakerController t, CardController controller = null)
         {
-            return new CardAlignmentHelper(t.TurnTaker, controller);
+            return new CardAlignmentHelperImpl(t.TurnTaker, controller);
         }
 
         // Helper for checking card/turntaker properties.
@@ -58,7 +58,7 @@ namespace Jp.SOTMUtilities
         // or card keywords.
         //
         // This will work with Card or TurnTaker damage sources.
-        public static CardAlignmentHelper Is(this DamageSource source, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this DamageSource source, CardController controller = null)
         {
             if (source.IsCard)
             {
