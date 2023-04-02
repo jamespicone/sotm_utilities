@@ -24,41 +24,72 @@ namespace Jp.SOTMUtilities
         }
 
         // Helper for checking card properties.
-        // You can pass a CardController to use when checking card properties such as villain-ness
-        // or card keywords.
-        public static CardAlignmentHelperImpl Is(this Card c, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this Card c)
         {
-            return new CardAlignmentHelperImpl(c, controller);
+            return new CardAlignmentHelperImpl(c);
         }
 
         // Helper for checking card properties.
-        // You can pass a CardController to use when checking card properties such as villain-ness
-        // or card keywords.
-        public static CardAlignmentHelperImpl Is(this CardController c, CardController controller = null)
+        public static CardAlignmentHelperWithController Is(this Card c, CardController controller)
         {
-            return new CardAlignmentHelperImpl(c.Card, controller);
+            return new CardAlignmentHelperWithController(c, controller);
+        }
+
+        // Helper for checking card properties.
+        public static CardAlignmentHelperImpl Is(this CardController c)
+        {
+            return new CardAlignmentHelperImpl(c.Card);
+        }
+
+        // Helper for checking card properties.
+        public static CardAlignmentHelperWithController Is(this CardController c, CardController controller)
+        {
+            return new CardAlignmentHelperWithController(c.Card, controller);
         }
 
         // Helper for checking TurnTaker properties.
-        // You can pass a CardController to use when checking villain-ness
-        public static CardAlignmentHelperImpl Is(this TurnTaker t, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this TurnTaker t)
         {
-            return new CardAlignmentHelperImpl(t, controller);
+            return new CardAlignmentHelperImpl(t);
         }
 
         // Helper for checking TurnTaker properties.
-        // You can pass a CardController to use when checking villain-ness
-        public static CardAlignmentHelperImpl Is(this TurnTakerController t, CardController controller = null)
+        public static CardAlignmentHelperWithController Is(this TurnTaker t, CardController controller)
         {
-            return new CardAlignmentHelperImpl(t.TurnTaker, controller);
+            return new CardAlignmentHelperWithController(t, controller);
+        }
+
+        // Helper for checking TurnTaker properties.
+        public static CardAlignmentHelperImpl Is(this TurnTakerController t)
+        {
+            return new CardAlignmentHelperImpl(t.TurnTaker);
+        }
+
+        // Helper for checking TurnTaker properties.
+        public static CardAlignmentHelperWithController Is(this TurnTakerController t, CardController controller)
+        {
+            return new CardAlignmentHelperWithController(t.TurnTaker, controller);
         }
 
         // Helper for checking card/turntaker properties.
-        // You can pass a CardController to use when checking card properties such as villain-ness
-        // or card keywords.
         //
         // This will work with Card or TurnTaker damage sources.
-        public static CardAlignmentHelperImpl Is(this DamageSource source, CardController controller = null)
+        public static CardAlignmentHelperImpl Is(this DamageSource source)
+        {
+            if (source.IsCard)
+            {
+                return source.Card.Is();
+            }
+            else
+            {
+                return source.TurnTaker.Is();
+            }
+        }
+
+        // Helper for checking card/turntaker properties.
+        //
+        // This will work with Card or TurnTaker damage sources.
+        public static CardAlignmentHelperWithController Is(this DamageSource source, CardController controller)
         {
             if (source.IsCard)
             {

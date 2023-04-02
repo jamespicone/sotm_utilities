@@ -481,6 +481,20 @@ namespace Jp.SOTMUtilities
 
     public class CardAlignmentHelperWithController : CardAlignmentHelperBase<CardAlignmentHelperWithController, CardAlignmentHelperWithController, CardAlignmentHelperWithController>
     {
+        public CardAlignmentHelperWithController() { }
+
+        internal CardAlignmentHelperWithController(Card _card, CardController _controller)
+        {
+            card = _card;
+            controller = _controller;
+        }
+
+        internal CardAlignmentHelperWithController(TurnTaker _turntaker, CardController _controller)
+        {
+            turntaker = _turntaker;
+            controller = _controller;
+        }
+
         // Indicates whether or not the Card/TurnTaker 'helper' was constructed on meets the requirements specified.
         public static implicit operator bool(CardAlignmentHelperWithController helper)
         {
@@ -497,16 +511,14 @@ namespace Jp.SOTMUtilities
     {
         public CardAlignmentHelperImpl() { }
 
-        internal CardAlignmentHelperImpl(Card _card, CardController _controller = null)
+        internal CardAlignmentHelperImpl(Card _card)
         {
             card = _card;
-            controller = _controller;
         }
 
-        internal CardAlignmentHelperImpl(TurnTaker _turntaker, CardController _controller = null)
+        internal CardAlignmentHelperImpl(TurnTaker _turntaker)
         {
             turntaker = _turntaker;
-            controller = _controller;
         }
 
         // Indicates whether or not the Card/TurnTaker 'helper' was constructed on meets the requirements specified.
