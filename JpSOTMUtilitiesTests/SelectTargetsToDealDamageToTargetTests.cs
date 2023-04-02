@@ -40,7 +40,7 @@ namespace Jp.SOTMUtilities.UnitTest
             RunCoroutine(
                 legacy.CharacterCardController.SelectTargetsToDealDamageToTarget(
                     legacy,
-                    c => c.Is().Hero().Target(),
+                    c => c.Is().Hero().Target().AccordingTo(legacy.CharacterCardController),
                     c => c.Is().Villain().Target().AccordingTo(legacy.CharacterCardController),
                     2,
                     DamageType.Infernal
