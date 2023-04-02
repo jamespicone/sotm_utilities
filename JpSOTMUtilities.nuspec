@@ -14,7 +14,7 @@
     <releaseNotes>Added some minor new functionality for CardAlignmentHelper. Made CardAlignmentHelper refuse to convert to bool if a controller wasn't provided. Update to Net4.8 for the new release of SOTM.</releaseNotes>
     <copyright>$copyright$</copyright>
     <dependencies>
-      <group targetFramework=".NETFramework3.5" />
+      <group targetFramework=".NETFramework4.8" />
     </dependencies>
   </metadata>  
 </package>
