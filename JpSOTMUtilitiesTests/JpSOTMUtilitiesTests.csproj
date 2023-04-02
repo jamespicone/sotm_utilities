@@ -58,8 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetOutOfTheWay\GetOutOfTheWayTest.cs" />
-    <Compile Include="HeroicInfinitor\HeroicInfinitorTest.cs" />
+    <Compile Include="HandleabraBugTests\MiscTests.cs" />
+    <Compile Include="HandleabraBugTests\GetOutOfTheWayTest.cs" />
+    <Compile Include="HandleabraBugTests\HeroicInfinitorTest.cs" />
     <Compile Include="SelectTargetsToDealDamageToTargetTests.cs" />
     <Compile Include="IsTurnTakersTurnPriorToOrDuringPhaseTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestVillainTests.cs" />

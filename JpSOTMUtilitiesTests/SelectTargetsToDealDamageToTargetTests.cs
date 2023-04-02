@@ -6,6 +6,7 @@ using System.Text;
 
 using NUnit.Framework;
 
+using Handelabra;
 using Handelabra.Sentinels.Engine.Model;
 using Handelabra.Sentinels.Engine.Controller;
 using Handelabra.Sentinels.UnitTest;
