@@ -72,6 +72,13 @@
       "body": [ "This is a villain card" ],
       "kind": "Villain",
       "hitpoints": 1
+    },
+    {
+      "identifier": "VillainCardInsistsItsHero",
+      "count": 1,
+      "title": "VillainCardInsistsItsHero",
+      "body": [ "This is a hero card, but only because of the cardcontroller" ],
+      "kind": "Villain"
     }
   ]
 }

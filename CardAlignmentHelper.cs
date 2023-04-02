@@ -226,6 +226,11 @@ namespace Jp.SOTMUtilities
                 throw new InvalidOperationException("CardAlignmentHelper with villain alignment without controller converted to bool (Missing AccordingTo?)");
             }
 
+            if (helper.alignment == CardAlignment.Hero && helper.controller == null)
+            {
+                throw new InvalidOperationException("CardAlignmentHelper with hero alignment without controller converted to bool (Missing AccordingTo?)");
+            }
+
             if (helper.expectedKeywords.Count() > 0 && helper.controller == null)
             {
                 throw new InvalidOperationException("CardAlignmentHelper with expected keywords but without controller converted to bool (Missing AccordingTo?)");
@@ -250,24 +255,46 @@ namespace Jp.SOTMUtilities
                     switch(baseAlignment)
                     {
                         case CardAlignment.Hero:
-                            if (helper.target == CardTarget.Target) {
-                                hasAlignment = (helper.card.TargetKind ?? helper.card.Kind) == DeckDefinition.DeckKind.Hero;
+                            if (cachedAskAllCardControllersInList == null)
+                            {
+                                var method = helper.controller.GameController.GetType().GetMethod(
+                                    "AskAllCardControllersInList",
+                                    BindingFlags.NonPublic | BindingFlags.Instance
+                                );
+
+                                cachedAskAllCardControllersInList = method.MakeGenericMethod(typeof(bool?));
                             }
-                            else { hasAlignment = helper.card.IsHero; }
+
+                            if (helper.target == CardTarget.Target) {
+                                var result = (bool?)cachedAskAllCardControllersInList.Invoke(
+                                    helper.controller.GameController,
+                                    new object[] {
+                                        CardControllerListType.ModifiesDeckKind,
+                                        (Func<CardController, bool?>)(cc => cc.AskIfIsVillainTarget(helper.card, helper.controller.GetCardSource())),
+                                        true,
+                                        null
+                                    }
+                                );
+
+                                var kind = helper.card.TargetKind ?? helper.card.Kind;
+                                var isHeroDefault = kind == DeckDefinition.DeckKind.Hero;
+
+                                hasAlignment = result.GetValueOrDefault(isHeroDefault);
+                            }
+                            else { hasAlignment = helper.controller.GameController.AskCardControllersIfIsHero(helper.card, helper.controller.GetCardSource()); }
                             break;
                         case CardAlignment.Villain:
+                            if (cachedAskAllCardControllersInList == null)
+                            {
+                                var method = helper.controller.GameController.GetType().GetMethod(
+                                    "AskAllCardControllersInList",
+                                    BindingFlags.NonPublic | BindingFlags.Instance
+                                );
+
+                                cachedAskAllCardControllersInList = method.MakeGenericMethod(typeof(bool?));
+                            }
+
                             if (helper.target == CardTarget.Target) {
-
-                                if (cachedAskAllCardControllersInList == null)
-                                {
-                                    var method = helper.controller.GameController.GetType().GetMethod(
-                                        "AskAllCardControllersInList",
-                                        BindingFlags.NonPublic | BindingFlags.Instance
-                                    );
-
-                                    cachedAskAllCardControllersInList = method.MakeGenericMethod(typeof(bool?));
-                                }
-
                                 var result = (bool?)cachedAskAllCardControllersInList.Invoke(
                                     helper.controller.GameController,
                                     new object[] {

@@ -26,10 +26,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(tt.Is().Environment().Target());
             Assert.IsTrue(tt.Is().Environment().NonTarget());
 
-            Assert.IsFalse(tt.Is().Hero());
-            Assert.IsFalse(tt.Is().Hero().Card());
-            Assert.IsFalse(tt.Is().Hero().Target());
-            Assert.IsFalse(tt.Is().Hero().NonTarget());
+            Assert.IsFalse(tt.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(tt.Is().Hero().Card().AccordingTo(controller));
+            Assert.IsFalse(tt.Is().Hero().Target().AccordingTo(controller));
+            Assert.IsFalse(tt.Is().Hero().NonTarget().AccordingTo(controller));
 
             Assert.IsFalse(tt.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(tt.Is().Villain().Card().AccordingTo(controller));
@@ -41,10 +41,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(tt.Is().NonEnvironment().Target());
             Assert.IsFalse(tt.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(tt.Is().NonHero());
-            Assert.IsFalse(tt.Is().NonHero().Card());
-            Assert.IsFalse(tt.Is().NonHero().Target());
-            Assert.IsTrue(tt.Is().NonHero().NonTarget());
+            Assert.IsTrue(tt.Is().NonHero().AccordingTo(controller));
+            Assert.IsFalse(tt.Is().NonHero().Card().AccordingTo(controller));
+            Assert.IsFalse(tt.Is().NonHero().Target().AccordingTo(controller));
+            Assert.IsTrue(tt.Is().NonHero().NonTarget().AccordingTo(controller));
 
             Assert.IsTrue(tt.Is().NonVillain().AccordingTo(controller));
             Assert.IsFalse(tt.Is().NonVillain().Card().AccordingTo(controller));
@@ -65,10 +65,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsTrue(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -80,10 +80,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsFalse(card.Is().NonHero().Target());
-            Assert.IsTrue(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -104,10 +104,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsTrue(card.Is().Hero());
-            Assert.IsTrue(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsTrue(card.Is().Hero().NonTarget());
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -119,10 +119,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonEnvironment().Target());
             Assert.IsTrue(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsFalse(card.Is().NonHero());
-            Assert.IsFalse(card.Is().NonHero().Card());
-            Assert.IsFalse(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -143,10 +143,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().Villain().AccordingTo(controller));
             Assert.IsTrue(card.Is().Villain().Card().AccordingTo(controller));
@@ -158,10 +158,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonEnvironment().Target());
             Assert.IsTrue(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsFalse(card.Is().NonHero().Target());
-            Assert.IsTrue(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsFalse(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -182,10 +182,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsTrue(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -197,10 +197,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsTrue(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -221,10 +221,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsTrue(card.Is().Hero());
-            Assert.IsTrue(card.Is().Hero().Card());
-            Assert.IsTrue(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -236,10 +236,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsTrue(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsFalse(card.Is().NonHero());
-            Assert.IsFalse(card.Is().NonHero().Card());
-            Assert.IsFalse(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -260,10 +260,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().Villain().AccordingTo(controller));
             Assert.IsTrue(card.Is().Villain().Card().AccordingTo(controller));
@@ -275,10 +275,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsTrue(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsTrue(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsFalse(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -299,10 +299,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsTrue(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -314,10 +314,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsTrue(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -338,10 +338,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsTrue(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -353,10 +353,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsTrue(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsFalse(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
@@ -377,10 +377,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().Environment().Target());
             Assert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero());
-            Assert.IsFalse(card.Is().Hero().Card());
-            Assert.IsFalse(card.Is().Hero().Target());
-            Assert.IsFalse(card.Is().Hero().NonTarget());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
             Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
             Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
@@ -392,10 +392,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsTrue(card.Is().NonEnvironment().Target());
             Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero());
-            Assert.IsTrue(card.Is().NonHero().Card());
-            Assert.IsTrue(card.Is().NonHero().Target());
-            Assert.IsFalse(card.Is().NonHero().NonTarget());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
             Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));

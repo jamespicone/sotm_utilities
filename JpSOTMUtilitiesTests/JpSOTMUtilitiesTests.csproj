@@ -87,7 +87,9 @@
     <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedVillainCardCardController.cs" />
     <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedVillainTargetCardController.cs" />
     <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroOwnedVillainTargetHeroCardCardController.cs" />
+    <Compile Include="TestMod\Heroes\AlignmentTestHero\HeroCardInsistsItsVillainCardController.cs" />
     <Compile Include="TestMod\TemplateCardController.cs" />
+    <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainCardInsistsItsHeroCardController.cs" />
     <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedEnvCardCardController.cs" />
     <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedEnvTargetCardController.cs" />
     <Compile Include="TestMod\Villains\AlignmentTestVillain\VillainOwnedEnvTargetVillainCardCardController.cs" />
