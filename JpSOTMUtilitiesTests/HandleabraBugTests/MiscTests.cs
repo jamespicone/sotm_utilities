@@ -151,5 +151,73 @@ namespace Jp.SOTMUtilities.UnitTest
 
             AssertNotTarget(sky.CharacterCard);
         }
+
+        [Test()]
+        public void ControlledDemolition()
+        {
+            SetupGameController("BaronBlade", "DrMetropolis", "InsulaPrimalis");
+
+            StartGame();
+            RemoveMobileDefensePlatform();
+
+            PlayCard("ControlledDemolition");
+            var field = PlayCard("ObsidianField");
+
+            QuickHPStorage(metro);
+            DecisionYesNo = true;
+            DestroyCard(field);
+            QuickHPCheck(-2);
+
+            PlayCard(field);
+            QuickHPStorage(baron);
+            DealDamage(metro, baron, 1, DamageType.Energy);
+            QuickHPCheck(-2);
+        }
+
+        [Test()]
+        public void PremptiveTwist()
+        {
+            SetupGameController("BaronBlade", "TheVisionary", "VoidGuardMainstay");
+
+            DecisionSelectCard = voidMainstay.CharacterCard;
+            PlayCard("TwistTheEther");
+            PlayCard("PreemptivePayback");
+
+            DecisionSelectTarget = voidMainstay.CharacterCard;
+            DecisionSelectDamageType = DamageType.Cold;
+            DecisionYesNo = true;
+            DecisionSelectFunctions = new int?[] { 0, 1, null };
+
+            UsePower(voidMainstay.CharacterCard);
+        }
+
+        [Test()]
+        public void OutOfPlayPowersCausingDamage()
+        {
+            SetupGameController(
+                new string[] { "GrandWarlordVoss", "Tempest", "Guise", "TheFinalWasteland" },
+                promoIdentifiers: new Dictionary<string, string> { { "Guise", "CompletionistGuiseCharacter" } }
+            );
+
+            StartGame();
+            RemoveVillainCards();
+
+            DecisionSelectCard = tempest.CharacterCard;
+            DecisionSelectFunction = 1;
+            UsePower(guise);
+
+            ResetDecisions();
+
+            DealDamage(guise, guise, 40, DamageType.Infernal);
+
+
+            var minion1 = PlayCard("GeneBoundFiresworn");
+            var minion2 = PlayCard("GeneBoundShockInfantry");
+            var minion3 = PlayCard("GeneBoundPsiWeaver");
+
+            QuickHPStorage(minion1, minion2, minion3);
+            UseIncapacitatedAbility(guise, 1);
+            QuickHPCheck(-1, -1, -1);
+        }
     }
 }
