@@ -115,8 +115,10 @@ namespace Jp.SOTMUtilities
                                     controller.GameController,
                                     new object[] {
                                         CardControllerListType.ModifiesDeckKind,
-                                        (Func<CardController, bool?>)(cc => cc.AskIfIsVillainTarget(card, controller.GetCardSource())),
+                                        (Func<CardController, bool?>)(cc => cc.AskIfIsHeroTarget(card, controller.GetCardSource())),
                                         true,
+                                        null,
+                                        null,
                                         null
                                     }
                                 );
@@ -147,6 +149,8 @@ namespace Jp.SOTMUtilities
                                         CardControllerListType.ModifiesDeckKind,
                                         (Func<CardController, bool?>)(cc => cc.AskIfIsVillainTarget(card, controller.GetCardSource())),
                                         true,
+                                        null,
+                                        null,
                                         null
                                     }
                                 );
