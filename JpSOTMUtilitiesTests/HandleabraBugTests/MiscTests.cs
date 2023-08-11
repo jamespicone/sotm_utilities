@@ -135,16 +135,14 @@ namespace Jp.SOTMUtilities.UnitTest
             // Kill spite
             DealDamage(spite, spite, 999, DamageType.Fire);
 
-            AssertIsTarget(sky.CharacterCard);
-            Assert.AreEqual(sky.CharacterCard.HitPoints, 1);
+            AssertNotTarget(sky.CharacterCard);
 
             EnterNextTurnPhase();
 
             GoToPlayCardPhase(legacy);
             PlayCard("HeroicInterception");
 
-            AssertIsTarget(sky.CharacterCard);
-            Assert.AreEqual(sky.CharacterCard.HitPoints, 1);
+            AssertNotTarget(sky.CharacterCard);
 
             GoToUseIncapacitatedAbilityPhase(sky);
             GoToUseIncapacitatedAbilityPhase(sky);
