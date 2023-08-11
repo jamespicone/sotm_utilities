@@ -488,6 +488,9 @@ namespace Jp.SOTMUtilities
         // a Card; it's an implementation issue.
         public ControllerSuppliedType AccordingTo(CardController _controller)
         {
+            if (_controller == null)
+                throw new NullReferenceException("Null CardController supplied to AccordingTo()");
+
             controller = _controller;
             var ret = new ControllerSuppliedType();
             ret.CopyFrom(this);
@@ -503,12 +506,18 @@ namespace Jp.SOTMUtilities
         {
             card = _card;
             controller = _controller;
+
+            if (controller == null)
+                throw new NullReferenceException("Null CardController supplied to Is()");
         }
 
         internal CardAlignmentHelperWithController(TurnTaker _turntaker, CardController _controller)
         {
             turntaker = _turntaker;
             controller = _controller;
+
+            if (controller == null)
+                throw new NullReferenceException("Null CardController supplied to Is()");
         }
 
         // Indicates whether or not the Card/TurnTaker 'helper' was constructed on meets the requirements specified.
