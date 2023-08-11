@@ -7,6 +7,7 @@ using System.Reflection;
 
 using Handelabra.Sentinels.Engine.Controller;
 using Handelabra.Sentinels.Engine.Model;
+using System.Runtime.Remoting.Messaging;
 
 namespace Jp.SOTMUtilities
 {
@@ -26,48 +27,72 @@ namespace Jp.SOTMUtilities
         // Helper for checking card properties.
         public static CardAlignmentHelperImpl Is(this Card c)
         {
+            if (c == null)
+                throw new NullReferenceException("Is() called on null card");
+
             return new CardAlignmentHelperImpl(c);
         }
 
         // Helper for checking card properties.
         public static CardAlignmentHelperWithController Is(this Card c, CardController controller)
         {
+            if (c == null)
+                throw new NullReferenceException("Is() called on null card");
+
             return new CardAlignmentHelperWithController(c, controller);
         }
 
         // Helper for checking card properties.
         public static CardAlignmentHelperImpl Is(this CardController c)
         {
+            if (c == null)
+                throw new NullReferenceException("Is() called on null cardcontroller");
+
             return new CardAlignmentHelperImpl(c.Card);
         }
 
         // Helper for checking card properties.
         public static CardAlignmentHelperWithController Is(this CardController c, CardController controller)
         {
+            if (c == null)
+                throw new NullReferenceException("Is() called on null cardcontroller");
+
             return new CardAlignmentHelperWithController(c.Card, controller);
         }
 
         // Helper for checking TurnTaker properties.
         public static CardAlignmentHelperImpl Is(this TurnTaker t)
         {
+            if (t == null)
+                throw new NullReferenceException("Is() called on null turntaker");
+
             return new CardAlignmentHelperImpl(t);
         }
 
         // Helper for checking TurnTaker properties.
         public static CardAlignmentHelperWithController Is(this TurnTaker t, CardController controller)
         {
+            if (t == null)
+                throw new NullReferenceException("Is() called on null turntaker");
+
             return new CardAlignmentHelperWithController(t, controller);
         }
 
         // Helper for checking TurnTaker properties.
         public static CardAlignmentHelperImpl Is(this TurnTakerController t)
         {
+            if (t == null)
+                throw new NullReferenceException("Is() called on null turntakercontroller");
+
             return new CardAlignmentHelperImpl(t.TurnTaker);
         }
 
         // Helper for checking TurnTaker properties.
         public static CardAlignmentHelperWithController Is(this TurnTakerController t, CardController controller)
         {
+            if (t == null)
+                throw new NullReferenceException("Is() called on null turntakercontroller");
+
             return new CardAlignmentHelperWithController(t.TurnTaker, controller);
         }
 
@@ -265,6 +290,11 @@ namespace Jp.SOTMUtilities
                     je => je.FromPhase?.Phase == phase && je.FromPhase?.TurnTaker == controller.TurnTaker
                 ).Count() == 0;
             }
+        }
+
+        public static bool IsResponsible(this Card c, DestroyCardAction dca)
+        {
+            return c == (dca.ResponsibleCard ?? dca.CardSource.Card);
         }
     }
 }
