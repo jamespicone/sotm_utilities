@@ -217,7 +217,8 @@ namespace Jp.SOTMUtilities.UnitTest
 
             StartGame();
 
-            var stich = PlayCard("StitchInTime");
+            var stitch = PlayCard("StitchInTime");
+            StackDeck("AGoodTimeSpan");
 
             Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
             Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
@@ -238,7 +239,7 @@ namespace Jp.SOTMUtilities.UnitTest
             expectedPhase = Phase.Start;
             GameController.OnDidPerformAction += CheckEphemeralPhases;
 
-            DestroyCard(stich);
+            DestroyCard(stitch);
 
             GameController.OnDidPerformAction -= CheckEphemeralPhases;            
 
