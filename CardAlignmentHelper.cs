@@ -99,30 +99,9 @@ namespace Jp.SOTMUtilities
                     switch (baseAlignment)
                     {
                         case CardAlignment.Hero:
-                            if (cachedAskAllCardControllersInList == null)
-                            {
-                                var method = controller.GameController.GetType().GetMethod(
-                                    "AskAllCardControllersInList",
-                                    BindingFlags.NonPublic | BindingFlags.Instance
-                                );
-
-                                cachedAskAllCardControllersInList = method.MakeGenericMethod(typeof(bool?));
-                            }
-
                             if (target == CardTarget.Target)
                             {
-                                var result = (bool?)cachedAskAllCardControllersInList.Invoke(
-                                    controller.GameController,
-                                    new object[] {
-                                        CardControllerListType.ModifiesDeckKind,
-                                        (Func<CardController, bool?>)(cc => cc.AskIfIsHeroTarget(card, controller.GetCardSource())),
-                                        true,
-                                        null,
-                                        null,
-                                        null
-                                    }
-                                );
-
+                                var result = controller.GameController.AskOnlyCardControllersIfIsHeroTarget(card, controller.GetCardSource());
                                 var kind = card.TargetKind ?? card.Kind;
                                 var isHeroDefault = kind == DeckDefinition.DeckKind.Hero;
 
@@ -131,30 +110,9 @@ namespace Jp.SOTMUtilities
                             else { hasAlignment = controller.GameController.AskCardControllersIfIsHero(card, controller.GetCardSource()); }
                             break;
                         case CardAlignment.Villain:
-                            if (cachedAskAllCardControllersInList == null)
-                            {
-                                var method = controller.GameController.GetType().GetMethod(
-                                    "AskAllCardControllersInList",
-                                    BindingFlags.NonPublic | BindingFlags.Instance
-                                );
-
-                                cachedAskAllCardControllersInList = method.MakeGenericMethod(typeof(bool?));
-                            }
-
                             if (target == CardTarget.Target)
                             {
-                                var result = (bool?)cachedAskAllCardControllersInList.Invoke(
-                                    controller.GameController,
-                                    new object[] {
-                                        CardControllerListType.ModifiesDeckKind,
-                                        (Func<CardController, bool?>)(cc => cc.AskIfIsVillainTarget(card, controller.GetCardSource())),
-                                        true,
-                                        null,
-                                        null,
-                                        null
-                                    }
-                                );
-
+                                var result = controller.GameController.AskOnlyCardControllersIfIsVillainTarget(card, controller.GetCardSource());
                                 var kind = card.TargetKind ?? card.Kind;
                                 var isVillainDefault = kind == DeckDefinition.DeckKind.Villain ||
                                     kind == DeckDefinition.DeckKind.VillainTeam;
@@ -276,8 +234,6 @@ namespace Jp.SOTMUtilities
 
         protected List<string> expectedKeywords = new List<string>();
         protected List<string> unwantedKeywords = new List<string>();
-
-        protected static MethodInfo cachedAskAllCardControllersInList = null;
     }
 
     // Builder class for testing card/turntaker properties.

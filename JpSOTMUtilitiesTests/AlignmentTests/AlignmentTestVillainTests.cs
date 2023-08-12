@@ -442,5 +442,85 @@ namespace Jp.SOTMUtilities.UnitTest
             Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
             Assert.IsTrue(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
+
+        [Test()]
+        public void TestModifiedDeckKindTarget()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestVillain");
+
+            var card = GetCard("VillainTargetInsistsItsHeroTarget");
+            var controller = GetCardController(card);
+            PlayCard(card); // can't be asked if its hero or not if its not in play
+
+            Assert.IsFalse(card.Is().Environment());
+            Assert.IsFalse(card.Is().Environment().Card());
+            Assert.IsFalse(card.Is().Environment().Target());
+            Assert.IsFalse(card.Is().Environment().NonTarget());
+
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+
+            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+
+            Assert.IsTrue(card.Is().NonEnvironment());
+            Assert.IsTrue(card.Is().NonEnvironment().Card());
+            Assert.IsTrue(card.Is().NonEnvironment().Target());
+            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+
+            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
+            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+        }
+
+        [Test()]
+        public void TestModifiedDeckKindCard()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestVillain");
+
+            var card = GetCard("VillainTargetInsistsItsHeroCard");
+            var controller = GetCardController(card);
+            PlayCard(card); // can't be asked if its hero or not if its not in play
+
+            Assert.IsFalse(card.Is().Environment());
+            Assert.IsFalse(card.Is().Environment().Card());
+            Assert.IsFalse(card.Is().Environment().Target());
+            Assert.IsFalse(card.Is().Environment().NonTarget());
+
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+
+            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().Villain().Target().AccordingTo(controller));
+            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+
+            Assert.IsTrue(card.Is().NonEnvironment());
+            Assert.IsTrue(card.Is().NonEnvironment().Card());
+            Assert.IsTrue(card.Is().NonEnvironment().Target());
+            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller));
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
+            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+
+            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller).Card());
+            Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
+            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+        }
     }
 }

@@ -79,6 +79,22 @@
       "title": "VillainCardInsistsItsHero",
       "body": [ "This is a hero card, but only because of the cardcontroller" ],
       "kind": "Villain"
+    },
+    {
+      "identifier": "VillainTargetInsistsItsHeroTarget",
+      "count": 1,
+      "title": "VillainTargetInsistsItsHeroTarget",
+      "body": [ "This is a hero target, but only because of the cardcontroller" ],
+      "kind": "Villain",
+      "hitpoints": 1
+    },
+    {
+      "identifier": "VillainTargetInsistsItsHeroCard",
+      "count": 1,
+      "title": "VillainTargetInsistsItsHeroCard",
+      "body": [ "This is a villain target and a hero card, but only because of the cardcontroller" ],
+      "kind": "Villain",
+      "hitpoints": 1
     }
   ]
 }

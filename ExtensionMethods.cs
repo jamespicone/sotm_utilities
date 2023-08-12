@@ -296,5 +296,33 @@ namespace Jp.SOTMUtilities
         {
             return c == (dca.ResponsibleCard ?? dca.CardSource.Card);
         }
+
+        public static bool? AskOnlyCardControllersIfIsHeroTarget(this GameController controller, Card c, CardSource source)
+        {
+            var list = controller.GetCardControllersInListAndInPlay(CardControllerListType.ModifiesDeckKind, includeInhibitorExeceptions: true);
+            foreach (var cc in list)
+            {
+                if (cc.IsBlank) continue;
+
+                var ret = cc.AskIfIsHeroTarget(c, source);
+                if (ret != null) return ret;
+            }
+
+            return null;
+        }
+
+        public static bool? AskOnlyCardControllersIfIsVillainTarget(this GameController controller, Card c, CardSource source)
+        {
+            var list = controller.GetCardControllersInListAndInPlay(CardControllerListType.ModifiesDeckKind, includeInhibitorExeceptions: true);
+            foreach (var cc in list)
+            {
+                if (cc.IsBlank) continue;
+
+                var ret = cc.AskIfIsVillainTarget(c, source);
+                if (ret != null) return ret;
+            }
+
+            return null;
+        }
     }
 }
