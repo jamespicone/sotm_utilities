@@ -217,5 +217,31 @@ namespace Jp.SOTMUtilities.UnitTest
             UseIncapacitatedAbility(guise, 1);
             QuickHPCheck(-1, -1, -1);
         }
+
+        [Test()]
+        public void OutOfPlayPowersCausingDraws()
+        {
+            SetupGameController(
+                new string[] { "GrandWarlordVoss", "Legacy", "Unity", "Haka", "Guise", "TheFinalWasteland" },
+                promoIdentifiers: new Dictionary<string, string> { { "Guise", "CompletionistGuiseCharacter" }, { "Haka", "TheEternalHakaCharacter" } }
+            );
+
+            StartGame();
+            RemoveVillainCards();
+
+            DecisionSelectCard = haka.CharacterCard;
+            DecisionSelectFunction = 1;
+            UsePower(guise);
+
+            ResetDecisions();
+
+            DealDamage(guise, guise, 40, DamageType.Infernal);
+
+            var discard = MoveCard(haka, "HakaOfBattle", haka.HeroTurnTaker.Hand);
+            DecisionSelectCard = discard;
+            QuickHandStorage(haka);
+            UseIncapacitatedAbility(guise, 1);
+            QuickHandCheck(2); // Drew 3, discarded 1
+        }
     }
 }
