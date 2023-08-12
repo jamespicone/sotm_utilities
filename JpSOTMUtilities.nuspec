@@ -11,7 +11,7 @@
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/jamespicone/sotm_utilities</projectUrl>
     <description>$description$</description>
-    <releaseNotes>Added Ongoing and Equipment syntactic sugar to CardAlignmentHelper. Fix bug where CardAlignmentHelper didn't call the ask method for turntakers checked for hero-ness.</releaseNotes>
+    <releaseNotes>Updated for upcoming 4.0.5 release of Sentinels. Fixed a card alignment bug. Added an extension method to check if a card is responsible for card destruction.</releaseNotes>
     <copyright>$copyright$</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.8" />
