@@ -294,7 +294,7 @@ namespace Jp.SOTMUtilities
 
         public static bool IsResponsible(this Card c, DestroyCardAction dca)
         {
-            return c == (dca.ResponsibleCard ?? dca.CardSource.Card);
+            return c == (dca.ResponsibleCard ?? dca.CardSource?.Card);
         }
 
         public static bool? AskOnlyCardControllersIfIsHeroTarget(this GameController controller, Card c, CardSource source)
