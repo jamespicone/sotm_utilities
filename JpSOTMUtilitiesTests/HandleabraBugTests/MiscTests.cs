@@ -243,5 +243,49 @@ namespace Jp.SOTMUtilities.UnitTest
             UseIncapacitatedAbility(guise, 1);
             QuickHandCheck(2); // Drew 3, discarded 1
         }
+
+        [Test()]
+        public void TestCardInPlayWhenSpiteChangesOver()
+        {
+            SetupGameController(
+                new string[] { "Spite", "Legacy", "Ra", "TheFinalWasteland" },
+                promoIdentifiers: new Dictionary<string, string> { { "Spite", "SpiteAgentOfGloomCharacter" } },
+                challenge: true
+            );
+
+            StartGame();
+
+            MoveAllCards(env, env.TurnTaker.Deck, env.TurnTaker.OutOfGame);
+
+            PlayCard("FlameBarrier");
+            SetHitPoints(spite, 1);
+            var sidekick = PlayCard("PotentialSidekick");
+            DecisionSelectCard = sidekick;
+            var prowl = PlayCard("OnTheProwl");
+        }
+
+        [Test()]
+        public void TestSpiteDefeatedWithJackHandle()
+        {
+            SetupGameController(
+                new string[] { "Spite", "Legacy", "MrFixer", "SilverGulch1883" },
+                promoIdentifiers: new Dictionary<string, string> { { "Spite", "SpiteAgentOfGloomCharacter" } },
+                challenge: true
+            );
+
+            StartGame();
+
+            MoveAllCards(env, env.TurnTaker.Deck, env.TurnTaker.OutOfGame);
+
+            var wagon = PlayCard("ExplosivesWagon");
+
+            PlayCard("JackHandle");
+            SetHitPoints(spite, 1);
+            SetHitPoints(wagon, 1);
+
+            DecisionSelectCards = new Card[] { wagon, spite.CharacterCard };
+
+            UsePower(fixer);
+        }
     }
 }
