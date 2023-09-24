@@ -59,11 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlignmentTests\GeneralAlignmentTests.cs" />
+    <Compile Include="ExtensionMethods\IsResponsibleTests.cs" />
     <Compile Include="HandleabraBugTests\MiscTests.cs" />
     <Compile Include="HandleabraBugTests\GetOutOfTheWayTest.cs" />
     <Compile Include="HandleabraBugTests\HeroicInfinitorTest.cs" />
-    <Compile Include="SelectTargetsToDealDamageToTargetTests.cs" />
-    <Compile Include="IsTurnTakersTurnPriorToOrDuringPhaseTests.cs" />
+    <Compile Include="ExtensionMethods\SelectTargetsToDealDamageToTargetTests.cs" />
+    <Compile Include="ExtensionMethods\IsTurnTakersTurnPriorToOrDuringPhaseTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestVillainTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestHeroTests.cs" />
     <Compile Include="AlignmentTests\AlignmentTestEnvironmentTests.cs" />
