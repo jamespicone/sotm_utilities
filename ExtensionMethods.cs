@@ -292,9 +292,28 @@ namespace Jp.SOTMUtilities
             }
         }
 
-        public static bool IsResponsible(this Card c, DestroyCardAction dca)
+        public static bool IsResponsible(this TurnTaker tt, DestroyCardAction dca)
         {
-            return c == (dca.ResponsibleCard ?? dca.CardSource?.Card);
+            // If the card was destroyed by damage dealt by the turntaker, it's responsible.
+            // If an explicit responsible card is set we shouldn't consider the damage source.
+            if (dca.ResponsibleCard == null && dca.DealDamageAction?.DamageSource.TurnTaker == tt) return true;
+
+            // ResponsibleCard overrides the cardsource if it exists
+            var responsibleCard = dca.ResponsibleCard ?? dca.CardSource?.Card;
+
+            // Nothing responsible? You can't be responsible.
+            if (responsibleCard == null) return false;
+
+            // If the responsible card is one of the turntaker's character cards, the TT
+            // is responsible
+            if (tt.CharacterCards.Contains(responsibleCard) || tt.CharacterCard == responsibleCard) return true;
+
+            // If the responsible card is owned by the TT, they're responsible.
+            if (responsibleCard.Owner == tt) return true;
+
+            
+
+            return false;
         }
 
         public static bool? AskOnlyCardControllersIfIsHeroTarget(this GameController controller, Card c, CardSource source)
