@@ -287,5 +287,55 @@ namespace Jp.SOTMUtilities.UnitTest
 
             UsePower(fixer);
         }
+
+        [Test()]
+        public void TestSavageManaVsDeathcaller()
+        {
+            SetupGameController("KaargraWarfang", "Haka", "TheCelestialTribunal");
+
+            MoveAllCards(warfang, warfang.TurnTaker.FindSubDeck("TitleDeck"), warfang.TurnTaker.OutOfGame);
+            StartGame();
+            RemoveVillainCards();
+            RemoveVillainTriggers();
+
+            var title = PlayCard("TitleDeathCaller");
+
+            // Simple way of getting deathcaller onto haka
+            var target = PlayCard("OrrimHiveminded");
+
+            DestroyCard(target, cardSource: haka.CharacterCard);
+
+            AssertAtLocation(title, haka.CharacterCard.BelowLocation);
+
+            var mana = PlayCard("SavageMana");
+            var target2 = PlayCard("OrrimHiveminded");
+            SetHitPoints(target2, 10);
+            DealDamage(haka, target2, 9, DamageType.Infernal);
+            AssertUnderCard(mana, target2);
+        }
+
+        [Test()]
+        public void TestCharacterWitnessVsDeathcaller()
+        {
+            SetupGameController("KaargraWarfang", "Haka", "TheCelestialTribunal");
+
+            MoveAllCards(warfang, warfang.TurnTaker.FindSubDeck("TitleDeck"), warfang.TurnTaker.OutOfGame);
+            StartGame();
+            RemoveVillainCards();
+            RemoveVillainTriggers();
+
+            var title = PlayCard("TitleDeathCaller");
+
+            var witness = PlayCard("CharacterWitness");
+
+            DecisionSelectFromBoxIdentifiers = new string[] { "ExtremistSkyScraperHugeCharacter" };
+            DecisionSelectFromBoxTurnTakerIdentifier = "SkyScraper";
+            var rep = PlayCard("RepresentativeOfEarth");
+            var target = PlayCard("CelestialExecutioner");
+
+            GoToStartOfTurn(env);
+
+            AssertAtLocation(title, haka.CharacterCard.BelowLocation);
+        }
     }
 }
