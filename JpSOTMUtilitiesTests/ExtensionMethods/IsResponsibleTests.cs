@@ -11,6 +11,7 @@ using Handelabra.Sentinels.Engine.Controller;
 using Handelabra.Sentinels.UnitTest;
 using Handelabra.Sentinels.Engine.Controller.VoidGuardMainstay;
 using Handelabra;
+using System.Diagnostics;
 
 namespace Jp.SOTMUtilities.UnitTest
 {
@@ -112,6 +113,108 @@ namespace Jp.SOTMUtilities.UnitTest
                 DamageType.Infernal,
                 cardSource: tachyon.CharacterCardController.GetCardSource()
             ));
+            GameController.OnDidPerformAction -= observeDestruction.Invoke;
+        }
+
+        [Test()]
+        public void TestDeathcaller()
+        {
+            SetupGameController("KaargraWarfang", "Haka", "TheCelestialTribunal");
+
+            MoveAllCards(warfang, warfang.TurnTaker.FindSubDeck("TitleDeck"), warfang.TurnTaker.OutOfGame);
+            StartGame();
+            RemoveVillainCards();
+            RemoveVillainTriggers();
+
+            var title = PlayCard("TitleDeathCaller");
+
+            // Simple way of getting deathcaller onto haka
+            var target = PlayCard("OrrimHiveminded");
+            DestroyCard(target, cardSource: haka.CharacterCard);
+
+            AssertAtLocation(title, haka.CharacterCard.BelowLocation);
+
+            var target2 = PlayCard("OrrimHiveminded");
+
+            Func<GameAction, IEnumerator> observeDestruction = (ga) => {
+                if (ga is DestroyCardAction dca)
+                {
+                    Assert.AreEqual(true, dca.WasCardDestroyed);
+                    Assert.AreEqual(target2, dca.CardToDestroy.Card);
+                    Assert.AreEqual(true, haka.TurnTaker.IsResponsible(dca));
+                    Assert.AreEqual(false, title.Owner.IsResponsible(dca));
+                }
+
+                return DoNothing();
+            };
+            
+            SetHitPoints(target2, 10);
+            DealDamage(haka, target2, 9, DamageType.Infernal);
+        }
+
+        [Test()]
+        public void TestDestroyWithDamageFromDeckTarget()
+        {
+            SetupGameController("BaronBlade", "Unity", "Tempest", "Megalopolis");
+
+            StartGame();
+
+            RemoveVillainTriggers();
+            RemoveVillainCards();
+
+            var platform = PlayCard("MobileDefensePlatform");
+            SetHitPoints(platform, 1);
+
+            var bot = PlayCard("TurretBot");
+            Func<GameAction, IEnumerator> observeDestruction = (ga) => {
+                if (ga is DestroyCardAction dca)
+                {
+                    Assert.AreEqual(dca.WasCardDestroyed, true);
+                    Assert.AreEqual(dca.CardToDestroy.Card, platform);
+                    Assert.AreEqual(unity.TurnTaker.IsResponsible(dca), false);
+                    Assert.AreEqual(tempest.TurnTaker.IsResponsible(dca), false);
+                }
+
+                return DoNothing();
+            };
+
+            GameController.OnDidPerformAction += observeDestruction.Invoke;
+            DealDamage(bot, platform, 10, DamageType.Infernal);
+            GameController.OnDidPerformAction -= observeDestruction.Invoke;
+        }
+
+        [Test()]
+        public void TestDestroyWithPowerOnTarget()
+        {
+            SetupGameController("BaronBlade", "Ra", "Tempest", "RealmOfDiscord");
+
+            StartGame();
+
+            RemoveVillainTriggers();
+            RemoveVillainCards();
+
+            var gaze = PlayCard("WrathfulGaze");
+            PlayCard("ImbuedVitality");
+
+            var platform = PlayCard("MobileDefensePlatform");
+            SetHitPoints(platform, 1);
+
+            Func<GameAction, IEnumerator> observeDestruction = (ga) => {
+                if (ga is DestroyCardAction dca)
+                {
+                    Log.Debug($"dca: {dca}, {dca.ActionSource}, {dca.CardSource}, {dca.DecisionSources}");
+                    Assert.AreEqual(true, dca.WasCardDestroyed);
+                    Assert.AreEqual(platform, dca.CardToDestroy.Card);
+                    Assert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));
+                    Assert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
+                }
+
+                return DoNothing();
+            };
+
+            GameController.OnDidPerformAction += observeDestruction.Invoke;
+            GoToUsePowerPhase(ra);
+            UsePower(gaze);
             GameController.OnDidPerformAction -= observeDestruction.Invoke;
         }
     }
