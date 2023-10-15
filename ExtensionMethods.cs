@@ -294,24 +294,53 @@ namespace Jp.SOTMUtilities
 
         public static bool IsResponsible(this TurnTaker tt, DestroyCardAction dca)
         {
-            // If the card was destroyed by damage dealt by the turntaker, it's responsible.
-            // If an explicit responsible card is set we shouldn't consider the damage source.
-            if (dca.ResponsibleCard == null && dca.DealDamageAction?.DamageSource.TurnTaker == tt) return true;
+            // Two cases:
+            // - Destroyed by damage
+            // - Destroyed by a card
 
-            // ResponsibleCard overrides the cardsource if it exists
+            // DestroyCardAction.DoActionOnSuccess sets ResponsibleCard to the DDA DamageSource
+            // if it's a card, so if they're the same we're in the damage case.
+            // Otherwise we're in the card case.
+
+            var comp = new TargetEqualityComparer();
+
+            if (
+                dca.DealDamageAction != null && 
+                (dca.ResponsibleCard == null || dca.ResponsibleCard == dca.DealDamageAction.DamageSource.Card)
+            )
+            {
+                // Damage case; if the damage is sourced from us or one of our character cards we are responsible.
+                var source = dca.DealDamageAction.DamageSource;
+                if (source.IsTurnTaker) return source.TurnTaker == tt;
+
+                return tt.CharacterCards.Contains(source.Card, comp);
+            }
+
+            // Card case.
+            // If responsible card is set then that's the card we care about, otherwise it's the cardsource.
             var responsibleCard = dca.ResponsibleCard ?? dca.CardSource?.Card;
 
-            // Nothing responsible? You can't be responsible.
+            // Damage dealt by the environment turntaker can result in a DestroyCardAction with no cardsource;
+            // if nothing is responsible tt clearly isn't.
             if (responsibleCard == null) return false;
+
+            if (responsibleCard.IsTarget)
+            {
+                // If the responsible card is a target then TT is responsible iff the target is one of tt's
+                // character cards.
+                return tt.CharacterCards.Contains(responsibleCard, comp);
+            }
 
             // If the responsible card is one of the turntaker's character cards, the TT
             // is responsible
-            if (tt.CharacterCards.Contains(responsibleCard) || tt.CharacterCard == responsibleCard) return true;
+            if (tt.CharacterCards.Contains(responsibleCard, comp) || tt.CharacterCard == responsibleCard) return true;
 
             // If the responsible card is owned by the TT, they're responsible.
             if (responsibleCard.Owner == tt) return true;
 
-            
+            // If the responsible card is next to or below one of the TT's character cards, they're responsible
+            if (responsibleCard.Location.IsNextToCard || responsibleCard.Location.IsBelowCard)
+                return tt.CharacterCards.Contains(responsibleCard.Location.OwnerCard, comp);
 
             return false;
         }
