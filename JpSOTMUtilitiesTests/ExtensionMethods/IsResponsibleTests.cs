@@ -202,7 +202,39 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Log.Debug($"dca: {dca}, {dca.ActionSource}, {dca.CardSource}, {dca.DecisionSources}");
+                    Assert.AreEqual(true, dca.WasCardDestroyed);
+                    Assert.AreEqual(platform, dca.CardToDestroy.Card);
+                    Assert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));
+                    Assert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
+                }
+
+                return DoNothing();
+            };
+
+            GameController.OnDidPerformAction += observeDestruction.Invoke;
+            GoToUsePowerPhase(ra);
+            UsePower(gaze);
+            GameController.OnDidPerformAction -= observeDestruction.Invoke;
+        }
+
+        [Test()]
+        public void TestDestroyWithPower()
+        {
+            SetupGameController("BaronBlade", "Ra", "Tempest", "RealmOfDiscord");
+
+            StartGame();
+
+            RemoveVillainTriggers();
+            RemoveVillainCards();
+
+            var gaze = PlayCard("WrathfulGaze");
+
+            var platform = PlayCard("MobileDefensePlatform");
+            SetHitPoints(platform, 1);
+
+            Func<GameAction, IEnumerator> observeDestruction = (ga) => {
+                if (ga is DestroyCardAction dca)
+                {
                     Assert.AreEqual(true, dca.WasCardDestroyed);
                     Assert.AreEqual(platform, dca.CardToDestroy.Card);
                     Assert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));

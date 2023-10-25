@@ -320,6 +320,13 @@ namespace Jp.SOTMUtilities
             // If responsible card is set then that's the card we care about, otherwise it's the cardsource.
             var responsibleCard = dca.ResponsibleCard ?? dca.CardSource?.Card;
 
+            // Check if the source is actually a power usage.
+            if (dca.ResponsibleCard == null && dca.CardSource?.PowerSource != null)
+            {
+                responsibleCard = dca.CardSource?.PowerSource?.HeroCharacterCardUsingPower?.Card ?? responsibleCard;
+
+            }
+
             // Damage dealt by the environment turntaker can result in a DestroyCardAction with no cardsource;
             // if nothing is responsible tt clearly isn't.
             if (responsibleCard == null) return false;
