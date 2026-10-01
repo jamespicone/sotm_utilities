@@ -1,0 +1,26 @@
+{
+  "name": "Powerless Test Hero",
+  "kind": "Hero",
+  "backgroundColor": "",
+  "difficulty": 1,
+  "initialCardIdentifiers": [
+    "PowerlessTestHeroCharacter"
+  ],
+  "cards": [
+    {
+      "identifier": "PowerlessTestHeroCharacter",
+      "count": 1,
+      "title": "Powerless Test Hero",
+      "body": "No printed powers",
+      "character": true,
+      "hitpoints": 30
+    },
+    {
+      "identifier": "PowerlessTestHeroFiller",
+      "count": 20,
+      "title": "PowerlessTestHeroFiller",
+      "keywords": [ "one-shot" ],
+      "body": [ "This card does nothing" ]
+    }
+  ]
+}
