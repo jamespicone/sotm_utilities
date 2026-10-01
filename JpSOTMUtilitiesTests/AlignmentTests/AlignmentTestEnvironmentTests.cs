@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 using Handelabra.Sentinels.Engine.Model;
 using Handelabra.Sentinels.UnitTest;
@@ -21,35 +22,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var tt = FindEnvironment();
             var controller = GetCardController(legacy.CharacterCard);
 
-            Assert.IsTrue(tt.Is().Environment());
-            Assert.IsFalse(tt.Is().Environment().Card());
-            Assert.IsFalse(tt.Is().Environment().Target());
-            Assert.IsTrue(tt.Is().Environment().NonTarget());
+            ClassicAssert.IsTrue(tt.Is().Environment());
+            ClassicAssert.IsFalse(tt.Is().Environment().Card());
+            ClassicAssert.IsFalse(tt.Is().Environment().Target());
+            ClassicAssert.IsTrue(tt.Is().Environment().NonTarget());
 
-            Assert.IsFalse(tt.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().Hero().Card().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().Hero().Target().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().Hero().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Hero().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Hero().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Hero().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(tt.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(tt.Is().NonEnvironment());
-            Assert.IsFalse(tt.Is().NonEnvironment().Card());
-            Assert.IsFalse(tt.Is().NonEnvironment().Target());
-            Assert.IsFalse(tt.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsFalse(tt.Is().NonEnvironment());
+            ClassicAssert.IsFalse(tt.Is().NonEnvironment().Card());
+            ClassicAssert.IsFalse(tt.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(tt.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(tt.Is().NonHero().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().NonHero().Card().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().NonHero().Target().AccordingTo(controller));
-            Assert.IsTrue(tt.Is().NonHero().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(tt.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().NonHero().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().NonHero().Target().AccordingTo(controller));
+            ClassicAssert.IsTrue(tt.Is().NonHero().NonTarget().AccordingTo(controller));
 
-            Assert.IsTrue(tt.Is().NonVillain().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsFalse(tt.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsTrue(tt.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(tt.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(tt.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsTrue(tt.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -60,35 +61,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedEnvCard");
             var controller = GetCardController(card);
             
-            Assert.IsTrue(card.Is().Environment());
-            Assert.IsTrue(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsTrue(card.Is().Environment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().Environment());
+            ClassicAssert.IsTrue(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsTrue(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(card.Is().NonEnvironment());
-            Assert.IsFalse(card.Is().NonEnvironment().Card());
-            Assert.IsFalse(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -99,35 +100,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedHeroCard");
             var controller = GetCardController(card);
 
-            Assert.IsFalse(card.Is().Environment());
-            Assert.IsFalse(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().Environment());
+            ClassicAssert.IsFalse(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsTrue(card.Is().NonEnvironment());
-            Assert.IsTrue(card.Is().NonEnvironment().Card());
-            Assert.IsFalse(card.Is().NonEnvironment().Target());
-            Assert.IsTrue(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -138,35 +139,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedVillainCard");
             var controller = GetCardController(card);
 
-            Assert.IsFalse(card.Is().Environment());
-            Assert.IsFalse(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().Environment());
+            ClassicAssert.IsFalse(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().Villain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsTrue(card.Is().NonEnvironment());
-            Assert.IsTrue(card.Is().NonEnvironment().Card());
-            Assert.IsFalse(card.Is().NonEnvironment().Target());
-            Assert.IsTrue(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -177,35 +178,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedEnvTarget");
             var controller = GetCardController(card);
 
-            Assert.IsTrue(card.Is().Environment());
-            Assert.IsTrue(card.Is().Environment().Card());
-            Assert.IsTrue(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().Environment());
+            ClassicAssert.IsTrue(card.Is().Environment().Card());
+            ClassicAssert.IsTrue(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(card.Is().NonEnvironment());
-            Assert.IsFalse(card.Is().NonEnvironment().Card());
-            Assert.IsFalse(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -216,35 +217,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedHeroTarget");
             var controller = GetCardController(card);
 
-            Assert.IsFalse(card.Is().Environment());
-            Assert.IsFalse(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().Environment());
+            ClassicAssert.IsFalse(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsTrue(card.Is().NonEnvironment());
-            Assert.IsTrue(card.Is().NonEnvironment().Card());
-            Assert.IsTrue(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -255,35 +256,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedVillainTarget");
             var controller = GetCardController(card);
 
-            Assert.IsFalse(card.Is().Environment());
-            Assert.IsFalse(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().Environment());
+            ClassicAssert.IsFalse(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().Villain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsTrue(card.Is().NonEnvironment());
-            Assert.IsTrue(card.Is().NonEnvironment().Card());
-            Assert.IsTrue(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -294,35 +295,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedEnvTargetEnvCard");
             var controller = GetCardController(card);
 
-            Assert.IsTrue(card.Is().Environment());
-            Assert.IsTrue(card.Is().Environment().Card());
-            Assert.IsTrue(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().Environment());
+            ClassicAssert.IsTrue(card.Is().Environment().Card());
+            ClassicAssert.IsTrue(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(card.Is().NonEnvironment());
-            Assert.IsFalse(card.Is().NonEnvironment().Card());
-            Assert.IsFalse(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -333,35 +334,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedHeroTargetEnvCard");
             var controller = GetCardController(card);
 
-            Assert.IsTrue(card.Is().Environment());
-            Assert.IsTrue(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().Environment());
+            ClassicAssert.IsTrue(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(card.Is().NonEnvironment());
-            Assert.IsFalse(card.Is().NonEnvironment().Card());
-            Assert.IsTrue(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
 
         [Test()]
@@ -372,35 +373,35 @@ namespace Jp.SOTMUtilities.UnitTest
             var card = GetCard("EnvOwnedVillainTargetEnvCard");
             var controller = GetCardController(card);
 
-            Assert.IsTrue(card.Is().Environment());
-            Assert.IsTrue(card.Is().Environment().Card());
-            Assert.IsFalse(card.Is().Environment().Target());
-            Assert.IsFalse(card.Is().Environment().NonTarget());
+            ClassicAssert.IsTrue(card.Is().Environment());
+            ClassicAssert.IsTrue(card.Is().Environment().Card());
+            ClassicAssert.IsFalse(card.Is().Environment().Target());
+            ClassicAssert.IsFalse(card.Is().Environment().NonTarget());
 
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Card());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().Hero().AccordingTo(controller).NonTarget());
 
-            Assert.IsFalse(card.Is().Villain().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
-            Assert.IsTrue(card.Is().Villain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Card().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().NonTarget().AccordingTo(controller));
 
-            Assert.IsFalse(card.Is().NonEnvironment());
-            Assert.IsFalse(card.Is().NonEnvironment().Card());
-            Assert.IsTrue(card.Is().NonEnvironment().Target());
-            Assert.IsFalse(card.Is().NonEnvironment().NonTarget());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().Card());
+            ClassicAssert.IsTrue(card.Is().NonEnvironment().Target());
+            ClassicAssert.IsFalse(card.Is().NonEnvironment().NonTarget());
 
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
-            Assert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
-            Assert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Card());
+            ClassicAssert.IsTrue(card.Is().NonHero().AccordingTo(controller).Target());
+            ClassicAssert.IsFalse(card.Is().NonHero().AccordingTo(controller).NonTarget());
 
-            Assert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
-            Assert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
-            Assert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().NonVillain().Card().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().NonVillain().NonTarget().AccordingTo(controller));
         }
     }
 }

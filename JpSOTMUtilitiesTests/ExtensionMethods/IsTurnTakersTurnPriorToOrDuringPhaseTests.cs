@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 using Handelabra.Sentinels.Engine.Model;
 using Handelabra.Sentinels.Engine.Controller;
@@ -27,97 +28,97 @@ namespace Jp.SOTMUtilities.UnitTest
 
             GoToStartOfTurn(legacy);
 
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
-
-            EnterNextTurnPhase();
-
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+
+            EnterNextTurnPhase();
+
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsFalse(tempest.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
         }
 
         [Test()]
@@ -134,46 +135,46 @@ namespace Jp.SOTMUtilities.UnitTest
             
             GoToStartOfTurn(comodora);
 
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             DecisionSelectTurnPhase = comodora.TurnTaker.TurnPhases.Where(tp => tp.Phase == Phase.DrawCard).First();
             EnterNextTurnPhase();
 
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             DecisionSelectTurnPhase = comodora.TurnTaker.TurnPhases.Where(tp => tp.Phase == Phase.UsePower).First();
             EnterNextTurnPhase();
 
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             DecisionSelectTurnPhase = comodora.TurnTaker.TurnPhases.Where(tp => tp.Phase == Phase.PlayCard).First(); ;
             EnterNextTurnPhase();
 
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
-            Assert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsFalse(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(comodora.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
         }
 
         Phase expectedPhase = Phase.Start;
@@ -186,21 +187,21 @@ namespace Jp.SOTMUtilities.UnitTest
             switch (expectedPhase)
             {
                 case Phase.Start:
-                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+                    ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+                    ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+                    ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
                     expectedPhase = Phase.PlayCard;
                     break;
                 case Phase.PlayCard:
-                    Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+                    ClassicAssert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+                    ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+                    ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
                     expectedPhase = Phase.End;
                     break;
                 case Phase.End:
-                    Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-                    Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-                    Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+                    ClassicAssert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+                    ClassicAssert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+                    ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
                     break;
             }
 
@@ -220,21 +221,21 @@ namespace Jp.SOTMUtilities.UnitTest
             var stitch = PlayCard("StitchInTime");
             StackDeck("AGoodTimeSpan");
 
-            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             EnterNextTurnPhase();
 
-            Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
-            Assert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
-            Assert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+            ClassicAssert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsFalse(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(lacapitanTeam.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
 
             expectedPhase = Phase.Start;
             GameController.OnDidPerformAction += CheckEphemeralPhases;

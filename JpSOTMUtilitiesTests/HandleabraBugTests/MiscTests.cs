@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 using Handelabra;
 using Handelabra.Sentinels.Engine.Model;
@@ -43,17 +44,17 @@ namespace Jp.SOTMUtilities.UnitTest
                 )
             );
 
-            Assert.AreEqual(storedResults.Count, 2);
+            ClassicAssert.AreEqual(storedResults.Count, 2);
 
             if (storedResults.First().SelectedTurnTaker == legacy.TurnTaker)
             {
-                Assert.IsTrue(storedResults.First().SelectedTurnTaker == legacy.TurnTaker);
-                Assert.IsTrue(storedResults.Last().SelectedTurnTaker == tempest.TurnTaker);
+                ClassicAssert.IsTrue(storedResults.First().SelectedTurnTaker == legacy.TurnTaker);
+                ClassicAssert.IsTrue(storedResults.Last().SelectedTurnTaker == tempest.TurnTaker);
             }
             else
             {
-                Assert.IsTrue(storedResults.First().SelectedTurnTaker == tempest.TurnTaker);
-                Assert.IsTrue(storedResults.Last().SelectedTurnTaker == legacy.TurnTaker);
+                ClassicAssert.IsTrue(storedResults.First().SelectedTurnTaker == tempest.TurnTaker);
+                ClassicAssert.IsTrue(storedResults.Last().SelectedTurnTaker == legacy.TurnTaker);
             }
         }
 
@@ -130,7 +131,7 @@ namespace Jp.SOTMUtilities.UnitTest
             UseIncapacitatedAbility(sky, 2);
 
             AssertIsTarget(sky.CharacterCard);
-            Assert.AreEqual(sky.CharacterCard.HitPoints, 1);
+            ClassicAssert.AreEqual(sky.CharacterCard.HitPoints, 1);
 
             // Kill spite
             DealDamage(spite, spite, 999, DamageType.Fire);

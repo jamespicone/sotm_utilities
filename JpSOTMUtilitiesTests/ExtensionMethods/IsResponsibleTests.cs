@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 using Handelabra.Sentinels.Engine.Model;
 using Handelabra.Sentinels.Engine.Controller;
@@ -36,10 +37,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(dca.WasCardDestroyed, true);
-                    Assert.AreEqual(dca.CardToDestroy.Card, platform);
-                    Assert.AreEqual(legacy.TurnTaker.IsResponsible(dca), true);
-                    Assert.AreEqual(tempest.TurnTaker.IsResponsible(dca), false);
+                    ClassicAssert.AreEqual(dca.WasCardDestroyed, true);
+                    ClassicAssert.AreEqual(dca.CardToDestroy.Card, platform);
+                    ClassicAssert.AreEqual(legacy.TurnTaker.IsResponsible(dca), true);
+                    ClassicAssert.AreEqual(tempest.TurnTaker.IsResponsible(dca), false);
                 }
 
                 return DoNothing();
@@ -66,10 +67,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(true, dca.WasCardDestroyed);
-                    Assert.AreEqual(forcefield, dca.CardToDestroy.Card);
-                    Assert.AreEqual(true, tachyon.TurnTaker.IsResponsible(dca));
-                    Assert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(true, dca.WasCardDestroyed);
+                    ClassicAssert.AreEqual(forcefield, dca.CardToDestroy.Card);
+                    ClassicAssert.AreEqual(true, tachyon.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
                 }
 
                 return DoNothing();
@@ -96,10 +97,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(true, dca.WasCardDestroyed);
-                    Assert.AreEqual(platform, dca.CardToDestroy.Card);
-                    Assert.AreEqual(true, tachyon.TurnTaker.IsResponsible(dca));
-                    Assert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(true, dca.WasCardDestroyed);
+                    ClassicAssert.AreEqual(platform, dca.CardToDestroy.Card);
+                    ClassicAssert.AreEqual(true, tachyon.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
                 }
 
                 return DoNothing();
@@ -139,10 +140,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(true, dca.WasCardDestroyed);
-                    Assert.AreEqual(target2, dca.CardToDestroy.Card);
-                    Assert.AreEqual(true, haka.TurnTaker.IsResponsible(dca));
-                    Assert.AreEqual(false, title.Owner.IsResponsible(dca));
+                    ClassicAssert.AreEqual(true, dca.WasCardDestroyed);
+                    ClassicAssert.AreEqual(target2, dca.CardToDestroy.Card);
+                    ClassicAssert.AreEqual(true, haka.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(false, title.Owner.IsResponsible(dca));
                 }
 
                 return DoNothing();
@@ -169,10 +170,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(dca.WasCardDestroyed, true);
-                    Assert.AreEqual(dca.CardToDestroy.Card, platform);
-                    Assert.AreEqual(unity.TurnTaker.IsResponsible(dca), false);
-                    Assert.AreEqual(tempest.TurnTaker.IsResponsible(dca), false);
+                    ClassicAssert.AreEqual(dca.WasCardDestroyed, true);
+                    ClassicAssert.AreEqual(dca.CardToDestroy.Card, platform);
+                    ClassicAssert.AreEqual(unity.TurnTaker.IsResponsible(dca), false);
+                    ClassicAssert.AreEqual(tempest.TurnTaker.IsResponsible(dca), false);
                 }
 
                 return DoNothing();
@@ -202,10 +203,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(true, dca.WasCardDestroyed);
-                    Assert.AreEqual(platform, dca.CardToDestroy.Card);
-                    Assert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));
-                    Assert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(true, dca.WasCardDestroyed);
+                    ClassicAssert.AreEqual(platform, dca.CardToDestroy.Card);
+                    ClassicAssert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
                 }
 
                 return DoNothing();
@@ -235,10 +236,10 @@ namespace Jp.SOTMUtilities.UnitTest
             Func<GameAction, IEnumerator> observeDestruction = (ga) => {
                 if (ga is DestroyCardAction dca)
                 {
-                    Assert.AreEqual(true, dca.WasCardDestroyed);
-                    Assert.AreEqual(platform, dca.CardToDestroy.Card);
-                    Assert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));
-                    Assert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(true, dca.WasCardDestroyed);
+                    ClassicAssert.AreEqual(platform, dca.CardToDestroy.Card);
+                    ClassicAssert.AreEqual(true, ra.TurnTaker.IsResponsible(dca));
+                    ClassicAssert.AreEqual(false, tempest.TurnTaker.IsResponsible(dca));
                 }
 
                 return DoNothing();
