@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Handelabra.Sentinels.Engine.Controller.PromoCardUnlockControllers;
 using NUnit.Framework.Legacy;
+using System.Reflection;
 
 namespace Handelabra.Sentinels.UnitTest
 {
@@ -501,15 +502,39 @@ namespace Handelabra.Sentinels.UnitTest
 
         IEnumerable<KeyValuePair<string, string>> HandleGetHeroCardsInBoxRequest(Func<string, bool> identifierCriteria, Func<string, bool> turnTakerCriteria)
         {
+            // Get the assemblies added to the mod helper
+            FieldInfo assemblyField = typeof(ModHelper).GetField("_assemblies", BindingFlags.NonPublic | BindingFlags.Static);
+            var modAssemblies = (Dictionary<string, Assembly>)assemblyField.GetValue(null);
+
+            var modDecks = new List<string>();
+            foreach (var assembly in modAssemblies)
+            {
+                var resourceNames = assembly.Value.GetManifestResourceNames();
+                foreach (var resource in resourceNames)
+                {
+                    var decklistName = resource;
+                    var index = decklistName.IndexOf("DeckList.json");
+                    if (index < 0) continue; // Not a decklist
+                    decklistName = decklistName.Remove(index);
+                    decklistName = decklistName.Replace(".DeckLists", "");
+
+                    string identifier;
+                    ModHelper.GetNamespaceFromQualifiedIdentifier(decklistName, out identifier);
+
+                    modDecks.Add($"{assembly.Key}.{identifier}");
+                }
+            }
+
             var result = new List<KeyValuePair<string, string>>();
 
             var modDefs = ModHelper.GetAllPromoDefinitions();
 
             // Find all the playable hero character cards in the box (including other sizes of Sky-Scraper)
-            var availableHeroes = DeckDefinition.AvailableHeroes;
+            var availableHeroes = DeckDefinition.AvailableHeroes.Union(modDecks);
             foreach (var heroTurnTaker in availableHeroes.Where(turnTakerCriteria))
             {
                 var heroDefinition = DeckDefinitionCache.GetDeckDefinition(heroTurnTaker);
+                if (!heroDefinition.IsHero) continue; // Only hero decks
 
                 var defs = heroDefinition.GetAllCardDefinitions();
 
@@ -521,7 +546,8 @@ namespace Handelabra.Sentinels.UnitTest
                     // Ignore non-real cards (Sentinels Intructions) and cards that do not start in play (Sky-Scraper sizes)
                     if (cardDef.IsCharacter
                         && cardDef.IsRealCard
-                        && identifierCriteria(cardDef.QualifiedPromoIdentifierOrIdentifier))
+                        && identifierCriteria(cardDef.QualifiedPromoIdentifierOrIdentifier)
+                    )
                     {
                         // It's in the box!
                         var kvp = new KeyValuePair<string, string>(heroTurnTaker, cardDef.QualifiedPromoIdentifierOrIdentifier);
@@ -2609,6 +2635,11 @@ namespace Handelabra.Sentinels.UnitTest
             this.RunCoroutine(this.GameController.DealDamageToTarget(new DamageSource(this.GameController, source), target, amount, type, isIrreducible, ignoreBattleZone: ignoreBattleZone, cardSource: new CardSource(this.GameController.FindCardController(source))));
         }
 
+        protected void DealDamage(TurnTaker source, Card target, int amount, DamageType type, bool isIrreducible = false, bool ignoreBattleZone = false)
+        {
+            this.RunCoroutine(this.GameController.DealDamageToTarget(new DamageSource(this.GameController, source), target, amount, type, isIrreducible, ignoreBattleZone: ignoreBattleZone, cardSource: new CardSource(this.GameController.FindCardController(target))));
+        }
+
         protected void DealDamage(Card source, TurnTakerController target, int amount, DamageType type, bool isIrreducible = false)
         {
             DealDamage(source, target.CharacterCard, amount, type);
@@ -2712,7 +2743,7 @@ namespace Handelabra.Sentinels.UnitTest
             return results;
         }
 
-        public void OutputDamagePreviewResults(IEnumerable<DamagePreviewResult> results)
+        private void OutputDamagePreviewResults(IEnumerable<DamagePreviewResult> results)
         {
             foreach (DamagePreviewResult preview in results)
             {
@@ -3188,6 +3219,21 @@ namespace Handelabra.Sentinels.UnitTest
             ClassicAssert.IsTrue(card.HasGameText, card.Title + " should have game text.");
         }
 
+        protected bool IsHero(Card card, CardSource cardSource = null)
+        {
+            return GameController.AskCardControllersIfIsHero(card, cardSource);
+        }
+
+        protected bool IsHeroTarget(Card card, CardSource cardSource = null)
+        {
+            return GameController.AskCardControllersIfIsHeroTarget(card, cardSource);
+        }
+
+        protected bool IsVillain(Card card, CardSource cardSource = null)
+        {
+            return GameController.AskCardControllersIfIsVillain(card, cardSource);
+        }
+
         protected bool IsVillainTarget(Card card, CardSource cardSource = null)
         {
             return this.GameController.AskCardControllersIfIsVillainTarget(card, cardSource);
@@ -3362,7 +3408,7 @@ namespace Handelabra.Sentinels.UnitTest
 
         protected void AssertInTrash(Card card)
         {
-            AssertInTrash(this.GameController.FindTurnTakerController(card.Owner), card);
+            AssertAtLocation(card, card.NativeTrash);
         }
 
         protected void AssertInTrash(string identifier)
@@ -3774,7 +3820,7 @@ namespace Handelabra.Sentinels.UnitTest
 
         protected void AssertInDeck(Card card)
         {
-            AssertInDeck(this.GameController.FindTurnTakerController(card.Owner), card);
+            AssertAtLocation(card, card.NativeDeck);
         }
 
         protected void AssertInDeck(IEnumerable<Card> cards)
@@ -4706,7 +4752,7 @@ namespace Handelabra.Sentinels.UnitTest
             MoveCards(ttc, cards, c => c.NativeDeck, toBottom, overrideIndestructible: true);
         }
 
-        protected void StackDeckAfterShuffle(TurnTakerController ttc, string[] identifiers, bool toBottom = false)
+        protected void StackDeckAfterShuffle(TurnTakerController ttc, string[] identifiers, bool toBottom = false, CardController source = null)
         {
             ITrigger trigger = null;
             Func<ShuffleCardsAction, IEnumerator> StackDeckAndRemoveTriggerResponse = action =>
@@ -4716,11 +4762,12 @@ namespace Handelabra.Sentinels.UnitTest
                 return DoNothing();
             };
 
-            trigger = new Trigger<ShuffleCardsAction>(this.GameController, s => s.Location == ttc.TurnTaker.Deck, StackDeckAndRemoveTriggerResponse, new TriggerType[] { TriggerType.MoveCard }, TriggerTiming.After, new CardSource(ttc.CharacterCardController));
+            source = source ?? ttc.CharacterCardController;
+            trigger = new Trigger<ShuffleCardsAction>(this.GameController, s => s.Location == ttc.TurnTaker.Deck, StackDeckAndRemoveTriggerResponse, new TriggerType[] { TriggerType.MoveCard }, TriggerTiming.After, new CardSource(source));
             this.GameController.AddTrigger(trigger);
         }
 
-        protected void StackDeckAfterShuffle(TurnTakerController ttc, IEnumerable<Card> cards, bool toBottom = false)
+        protected void StackDeckAfterShuffle(TurnTakerController ttc, IEnumerable<Card> cards, bool toBottom = false, CardController source = null)
         {
             ITrigger trigger = null;
             Func<ShuffleCardsAction, IEnumerator> StackDeckAndRemoveTriggerResponse = action =>
@@ -4730,7 +4777,8 @@ namespace Handelabra.Sentinels.UnitTest
                 return DoNothing();
             };
 
-            trigger = new Trigger<ShuffleCardsAction>(this.GameController, s => s.Location == ttc.TurnTaker.Deck, StackDeckAndRemoveTriggerResponse, new TriggerType[] { TriggerType.MoveCard }, TriggerTiming.After, new CardSource(ttc.CharacterCardController));
+            source = source ?? ttc.CharacterCardController;
+            trigger = new Trigger<ShuffleCardsAction>(this.GameController, s => s.Location == ttc.TurnTaker.Deck, StackDeckAndRemoveTriggerResponse, new TriggerType[] { TriggerType.MoveCard }, TriggerTiming.After, new CardSource(source));
             this.GameController.AddTrigger(trigger);
         }
 
