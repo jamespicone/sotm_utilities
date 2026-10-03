@@ -769,5 +769,249 @@ namespace Jp.SOTMUtilities.UnitTest
 
             ClassicAssert.AreEqual(2, GameController.Game.StatusEffects.OfType<OnDealDamageStatusEffect>().Count());
         }
+
+        // Found by POTW's random game tests (Aug 2026). Guise's "Uh, Yeah, I'm That Guy!" reruns the Play() of each
+        // ongoing in the chosen hero's play area as Guise's. Chokepoint's Shocking Animation (next to an equipment
+        // card) then calls MakeTargettable(GetCardThisCardIsNextTo()) with a null card, and MakeTargetAction.ToString()
+        // dereferences CardToMakeTarget.Title. It isn't only logging: GameController.DoAction always calls
+        // InitiateAction(), which builds "Initiate Action: " + ToString() before calling Log.Debug.
+        // Expected crash: NullReferenceException in MakeTargetAction.ToString().
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        public void TestGuiseCopiesShockingAnimation()
+        {
+            SetupGameController("Chokepoint", "Guise", "TheWraith", "Megalopolis");
+            StartGame();
+
+            var eyepiece = PlayCard("InfraredEyepiece");
+
+            DecisionSelectCard = eyepiece;
+            PlayCard("ShockingAnimation");
+
+            DecisionSelectTurnTaker = wraith.TurnTaker;
+            PlayCard("UhYeahImThatGuy");
+        }
+
+        // Found by POTW's random game tests (Aug 2026). Hades' Power Overwhelming uses AddAdditionalPhaseActionTrigger,
+        // whose cleanup calls ShouldIncreasePhaseActionCount when the card leaves play. That finds the hero through
+        // Card.Location.OwnerTurnTaker, but it runs after the card has moved, so the owner is the villain, ToHero() is
+        // null and .TurnTaker throws. It only happens when the card leaves a hero play area during a power phase.
+        // Reached in normal play: Freedom Five Legacy's power lets Tempest play Into the Stratosphere during Legacy's
+        // power phase, which puts Power Overwhelming on the villain deck. (Same trigger as
+        // TestReturnPhaseActionGranterToHand.)
+        // Expected crash: NullReferenceException in PowerOverwhelmingCardController.ShouldIncreasePhaseActionCount.
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        public void TestPowerOverwhelmingMovedDuringPowerPhase()
+        {
+            SetupGameController(
+                new string[] { "Hades", "Legacy", "Tempest", "Megalopolis" },
+                promoIdentifiers: new Dictionary<string, string> { { "Legacy", "FreedomFiveLegacyCharacter" } }
+            );
+            StartGame();
+
+            DecisionSelectTurnTaker = legacy.TurnTaker;
+            var powerOverwhelming = PlayCard("PowerOverwhelming");
+            ResetDecisions();
+
+            var stratosphere = PutInHand("IntoTheStratosphere");
+
+            GoToUsePowerPhase(legacy);
+
+            // Legacy's power: "One player may play a card" -> Tempest -> Into the Stratosphere -> move Power
+            // Overwhelming to the villain deck. Function 0 because the other option (move an environment card) is
+            // unavailable with no environment card in play.
+            DecisionSelectFunction = 0;
+            DecisionSelectTurnTaker = tempest.TurnTaker;
+            DecisionSelectCards = new Card[] { stratosphere, powerOverwhelming };
+
+            UsePower(legacy.CharacterCard);
+        }
+
+        // Found by POTW's random game tests (Aug 2026). GameController.DetermineTurnTakersWithMostOrFewest adds the
+        // tie-break decision's SelectedTurnTaker to its results without checking that the decision completed. If the
+        // decision is refused (CanPerformAction says no, e.g. because the card source is inhibited), a null goes into
+        // the results and TargetInfo.GetTargets throws on it. Being inhibited doesn't stop a card's triggers firing;
+        // only its GameActions are refused, so Citizen Summer's end-of-turn "most cards in play" damage still reaches
+        // the tie-break. The test inhibits her with AddInhibitor. The random game got there because
+        // DestroyCardAction.InhibitCard never removes its inhibitor, but POTW's notes say it can't be reached with base
+        // game content alone.
+        // Expected crash: NullReferenceException in TargetInfo.GetTargets, from FindHeroTargetWithMostCardsInPlay.
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        public void TestMostCardsTieBreakWithInhibitedSource()
+        {
+            SetupGameController("CitizenDawn", "Legacy", "Bunker", "Haka", "Megalopolis");
+            StartGame();
+
+            DestroyNonCharacterVillainCards();
+            var summer = PlayCard("CitizenSummer");
+
+            GameController.AddInhibitor(FindCardController(summer));
+
+            // All three heroes have only their character card in play, so "most cards in play" is a three-way tie
+            GoToEndOfTurn(dawn);
+        }
+
+        // Found by POTW's random game tests (Aug 2026), but NOT reachable by a player. Completionist Guise's power picks
+        // a hero character card, then a variant of that hero from the box, and nothing checks that the box answer
+        // belongs to that hero: SelectFromBoxDecision doesn't validate against its Choices, and the controller finds
+        // the card game-wide. Answering with one of Sky-Scraper's size cards when replacing Bunker moves it into
+        // Bunker's play area, and every later Sky-Scraper switch to that size crashes. The game only offers Bunker's
+        // variants, so this needs a decision maker that ignores the choices, as the random tests' does (BaseTest only
+        // checks the identifier criteria, not the turn taker).
+        // Expected crash: NullReferenceException in SwitchCardsAction.DoActionOnSuccess.
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        public void TestGuiseTakesSkyScraperSizeCardForAnotherHero()
+        {
+            SetupGameController(
+                new string[] { "BaronBlade", "Guise", "SkyScraper", "Bunker", "Megalopolis" },
+                promoIdentifiers: new Dictionary<string, string> {
+                    { "Guise", "CompletionistGuiseCharacter" },
+                    { "SkyScraper", "ExtremistSkyScraperNormalCharacter" }
+                }
+            );
+            StartGame();
+
+            // Replace Bunker, but answer the box with one of Sky-Scraper's size cards
+            DecisionSelectCard = bunker.CharacterCard;
+            DecisionSelectFromBoxIdentifiers = new string[] { "ExtremistSkyScraperTinyCharacter" };
+            DecisionSelectFromBoxTurnTakerIdentifier = "SkyScraper";
+            DecisionSelectFunction = 1; // deal damage, not the borrowed power
+            DecisionSelectTarget = baron.CharacterCard;
+            UsePower(guise.CharacterCard);
+            ResetDecisions();
+
+            Assert.That(sky.TurnTaker.FindCard("SkyScraperTinyCharacter", false), Is.Null,
+                "Sky-Scraper should have been stranded without a tiny size card");
+
+            PutInHand(sky, "LinkingIncursion");
+            GoToPlayCardPhase(sky);
+            PlayCard("LinkingIncursion"); // switches to tiny
+        }
+
+        // Control for the test above: the legitimate version of the same play, where Guise replaces Sky-Scraper with a
+        // Sky-Scraper variant. All three size cards stay with Sky-Scraper.
+        [Test()]
+        public void TestGuiseTakesSkyScraperSizeCardControl()
+        {
+            SetupGameController(
+                new string[] { "BaronBlade", "Guise", "SkyScraper", "Megalopolis" },
+                promoIdentifiers: new Dictionary<string, string> {
+                    { "Guise", "CompletionistGuiseCharacter" },
+                    { "SkyScraper", "ExtremistSkyScraperNormalCharacter" }
+                }
+            );
+            StartGame();
+
+            // Without this the ReplaceHero decision picks Guise himself and the power does nothing
+            DecisionSelectCard = sky.CharacterCard;
+            DecisionSelectFromBoxIdentifiers = new string[] { "SkyScraperNormalCharacter" };
+            DecisionSelectFromBoxTurnTakerIdentifier = "SkyScraper";
+            DecisionSelectFunction = 1;
+            DecisionSelectTarget = baron.CharacterCard;
+            UsePower(guise.CharacterCard);
+            ResetDecisions();
+
+            foreach (var size in new[] { "SkyScraperNormalCharacter", "SkyScraperTinyCharacter", "SkyScraperHugeCharacter" })
+            {
+                Assert.That(sky.TurnTaker.FindCard(size, false), Is.Not.Null, size + " left Sky-Scraper");
+            }
+
+            PutInHand(sky, "LinkingIncursion");
+            GoToPlayCardPhase(sky);
+            PlayCard("LinkingIncursion");
+        }
+
+        // Found by Dino Fancie's random game tests (Sep 2026). At the end of Fanatic's turn, Zealous Offense totals the
+        // damage she dealt that turn (GetDamageDealtByFanaticThisTurn), filtering journal entries with
+        // (e.SourceCard != null && e.SourceCard == CharacterCard) || (e.SourceCard.Identifier == ...). When the first
+        // half is false because SourceCard is null, the second half dereferences it. SourceCard is null when a turn
+        // taker rather than a card dealt the damage. Here Prime Wardens Fanatic's power lets Prime Wardens Tempest use
+        // his, and its "the environment deals Tempest 3 lightning damage" is turn-taker damage during Fanatic's turn.
+        // Fix: check e.SourceCard != null once, before both comparisons.
+        // Expected crash: NullReferenceException in ZealousOffenseCardController.GetDamageDealtByFanaticThisTurn.
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        public void TestZealousOffenseAfterEnvironmentDamage()
+        {
+            SetupGameController(
+                new string[] { "BaronBlade", "Fanatic", "Tempest", "Megalopolis" },
+                promoIdentifiers: new Dictionary<string, string> {
+                    { "Fanatic", "PrimeWardensFanaticCharacter" },
+                    { "Tempest", "PrimeWardensTempestCharacter" }
+                }
+            );
+            StartGame();
+
+            GoToPlayCardPhase(fanatic);
+            PlayCard("ZealousOffense");
+
+            GoToUsePowerPhase(fanatic);
+            StackDeck(fanatic, "Chastise");
+            var hurricane = PutInHand("LocalizedHurricane");
+
+            DecisionSelectTurnTaker = tempest.TurnTaker;
+            DecisionSelectPower = tempest.CharacterCard;
+            DecisionSelectCards = new Card[] { hurricane, null };
+            UsePower(fanatic.CharacterCard);
+            ResetDecisions();
+
+            GoToEndOfTurn(fanatic);
+        }
+
+        // Found by Dino Fancie's random game tests (Sep 2026). Title: The Living Weapon's criteria
+        // (WasDestroyedByInnatePower) handles a DestroyCardAction with no CardSource by falling back to the CardSource
+        // of the damage that destroyed the target, but the code that grants the title (TitleGrantedToWhom) reads
+        // action.CardSource.PowerSource without a null check. A destroy has no CardSource when turn-taker damage
+        // destroyed the target. Here Unity's Stealth Bot takes the redirect of Prime Wardens Tempest's "the environment
+        // deals Tempest 3 lightning damage" and is destroyed. (Tempest himself would be incapacitated, not destroyed.)
+        // Fix: use the same fallback in TitleGrantedToWhom.
+        // Expected crash: NullReferenceException in TitleTheLivingWeaponCardController's TitleGrantedToWhom delegate.
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        public void TestLivingWeaponAfterEnvironmentDamage()
+        {
+            SetupGameController(
+                new string[] { "KaargraWarfang", "Tempest", "Unity", "Megalopolis" },
+                promoIdentifiers: new Dictionary<string, string> { { "Tempest", "PrimeWardensTempestCharacter" } }
+            );
+            StartGame();
+
+            var livingWeapon = GetCard("TitleTheLivingWeapon");
+            if (!livingWeapon.IsInPlay)
+            {
+                PlayCard(livingWeapon);
+            }
+
+            var stealthBot = PlayCard("StealthBot");
+            SetHitPoints(stealthBot, 1);
+            var hurricane = PutInHand("LocalizedHurricane");
+
+            DecisionYesNo = true;
+            DecisionSelectCards = new Card[] { hurricane, null };
+            UsePower(tempest.CharacterCard);
+        }
+
+        // Found by Dino Fancie's random game tests (Sep 2026). In an advanced game, Argo's AskIfCardContainsKeyword
+        // reads base.Card, which asks every controller's AskIfCardIsReplaced, including Lemme See That's. That checks
+        // whether the card it's next to is equipment, which asks every controller's AskIfCardContainsKeyword,
+        // including Argo's, and so on forever. It happens as Guise plays Lemme See That next to any equipment card;
+        // Argo doesn't need to be flipped. Fix: use CardWithoutReplacements in Argo's override.
+        // Expected crash: StackOverflowException, which kills the test host, so this only runs when picked explicitly.
+        // Still broken as of the Dec 2024 engine.
+        [Test()]
+        [Explicit("Kills the test host with a StackOverflowException, so run it on its own.")]
+        public void TestAdvancedArgoLemmeSeeThat()
+        {
+            SetupGameController(new string[] { "Argo", "Guise", "Legacy", "Megalopolis" }, advanced: true);
+            StartGame();
+
+            var ring = PlayCard("TheLegacyRing");
+
+            DecisionSelectCard = ring;
+            PlayCard("LemmeSeeThat");
+        }
     }
 }
