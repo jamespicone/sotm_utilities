@@ -354,7 +354,8 @@ namespace Jp.SOTMUtilities
 
         public static bool? AskOnlyCardControllersIfIsHeroTarget(this GameController controller, Card c, CardSource source)
         {
-            var list = controller.GetCardControllersInListAndInPlay(CardControllerListType.ModifiesDeckKind, includeInhibitorExeceptions: true);
+            var list = controller.GetCardControllersInListAndInPlay(CardControllerListType.ModifiesDeckKind, includeInhibitorExeceptions: true)
+                .OrderByDescending(cc => cc.AskPriority);
             foreach (var cc in list)
             {
                 if (cc.IsBlank) continue;
@@ -368,7 +369,8 @@ namespace Jp.SOTMUtilities
 
         public static bool? AskOnlyCardControllersIfIsVillainTarget(this GameController controller, Card c, CardSource source)
         {
-            var list = controller.GetCardControllersInListAndInPlay(CardControllerListType.ModifiesDeckKind, includeInhibitorExeceptions: true);
+            var list = controller.GetCardControllersInListAndInPlay(CardControllerListType.ModifiesDeckKind, includeInhibitorExeceptions: true)
+                .OrderByDescending(cc => cc.AskPriority);
             foreach (var cc in list)
             {
                 if (cc.IsBlank) continue;

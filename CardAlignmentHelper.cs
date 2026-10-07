@@ -58,8 +58,10 @@ namespace Jp.SOTMUtilities
             character = other.character;
             isCard = other.isCard;
 
-            expectedKeywords = other.expectedKeywords;
-            unwantedKeywords = other.unwantedKeywords;
+            // Copy the keyword lists rather than sharing them, so adding a keyword to one helper doesn't
+            // affect the helper it was copied from.
+            expectedKeywords = new List<string>(other.expectedKeywords);
+            unwantedKeywords = new List<string>(other.unwantedKeywords);
         }
 
         // Indicates whether or not the Card/TurnTaker 'helper' was constructed on meets the requirements specified.
@@ -179,6 +181,12 @@ namespace Jp.SOTMUtilities
                     return false;
                 }
 
+                // Character() and Noncharacter() both exclude TurnTakers.
+                if (character.HasValue)
+                {
+                    return false;
+                }
+
                 if (expectedKeywords.Count() > 0 || unwantedKeywords.Count() > 0)
                 {
                     return false;
@@ -223,17 +231,17 @@ namespace Jp.SOTMUtilities
             throw new InvalidOperationException("CardAlignmentHelper without card or turntaker converted to bool");
         }
 
-        protected TurnTaker turntaker;
-        protected Card card;
-        protected CardController controller;
+        protected internal TurnTaker turntaker;
+        protected internal Card card;
+        protected internal CardController controller;
 
-        protected CardAlignment? alignment;
-        protected CardTarget target = CardTarget.Either;
-        protected bool? character = null;
-        protected bool? isCard = null;
+        protected internal CardAlignment? alignment;
+        protected internal CardTarget target = CardTarget.Either;
+        protected internal bool? character = null;
+        protected internal bool? isCard = null;
 
-        protected List<string> expectedKeywords = new List<string>();
-        protected List<string> unwantedKeywords = new List<string>();
+        protected internal List<string> expectedKeywords = new List<string>();
+        protected internal List<string> unwantedKeywords = new List<string>();
     }
 
     // Builder class for testing card/turntaker properties.
@@ -271,54 +279,54 @@ namespace Jp.SOTMUtilities
         // Isn't a TurnTaker.
         public NoChangeType Card()
         {
-            isCard = true;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.isCard = true;
             return ret;
         }
 
         // Is sourced from a TurnTaker. Excludes cards.
         public NoChangeType Noncard()
         {
-            isCard = false;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.isCard = false;
             return ret;
         }
 
         // Is specifically a target. Excludes TurnTakers as well as non-target cards.
         public NoChangeType Target()
         {
-            target = CardTarget.Target;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.target = CardTarget.Target;
             return ret;
         }
 
         // Is specifically not a target. Either a TurnTaker or a non-target card.
         public NoChangeType NonTarget()
         {
-            target = CardTarget.Nontarget;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.target = CardTarget.Nontarget;
             return ret;
         }
 
         // Is specifically a character card. Excludes TurnTakers.
         public NoChangeType Character()
         {
-            character = true;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.character = true;
             return ret;
         }
 
         // Is specifically a non-character card. Excludes TurnTakers.
         public NoChangeType Noncharacter()
         {
-            character = false;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.character = false;
             return ret;
         }
 
@@ -326,9 +334,9 @@ namespace Jp.SOTMUtilities
         // If Target() is specified, a Hero target (uses targetKind). Otherwise, a Hero card or TurnTaker.
         public NeedControllerType Hero()
         {
-            alignment = CardAlignment.Hero;
             var ret = new NeedControllerType();
             ret.CopyFrom(this);
+            ret.alignment = CardAlignment.Hero;
             return ret;
         }
 
@@ -336,9 +344,9 @@ namespace Jp.SOTMUtilities
         // If Target() is specified, an Environment target (uses targetKind). Otherwise an Environment card or TurnTaker.
         public NoChangeType Environment()
         {
-            alignment = CardAlignment.Environment;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.alignment = CardAlignment.Environment;
             return ret;
         }
 
@@ -349,9 +357,9 @@ namespace Jp.SOTMUtilities
         // that wants to know whether a card is a villain. It gets passed to AskCardControllersIfIsVillain.
         public NeedControllerType Villain()
         {
-            alignment = CardAlignment.Villain;
             var ret = new NeedControllerType();
             ret.CopyFrom(this);
+            ret.alignment = CardAlignment.Villain;
             return ret;
         }
 
@@ -363,9 +371,9 @@ namespace Jp.SOTMUtilities
         // usage. It's not clear what the 'correct' behaviour would be.
         public NeedControllerType NonHero()
         {
-            alignment = CardAlignment.Nonhero;
             var ret = new NeedControllerType();
             ret.CopyFrom(this);
+            ret.alignment = CardAlignment.Nonhero;
             return ret;
         }
 
@@ -377,9 +385,9 @@ namespace Jp.SOTMUtilities
         // usage. It's not clear what the 'correct' behaviour would be.
         public NoChangeType NonEnvironment()
         {
-            alignment = CardAlignment.Nonenvironment;
             var ret = new NoChangeType();
             ret.CopyFrom(this);
+            ret.alignment = CardAlignment.Nonenvironment;
             return ret;
         }
 
@@ -390,9 +398,9 @@ namespace Jp.SOTMUtilities
         // that wants to know whether a card is a villain. It gets passed to AskCardControllersIfIsVillain.
         public NeedControllerType NonVillain()
         {
-            alignment = CardAlignment.Nonvillain;
             var ret = new NeedControllerType();
             ret.CopyFrom(this);
+            ret.alignment = CardAlignment.Nonvillain;
             return ret;
         }
 
@@ -402,9 +410,9 @@ namespace Jp.SOTMUtilities
         // A CardController must be specified with AccordingTo or Is because of implementation limitations.
         public NeedControllerType WithKeyword(string keyword)
         {
-            expectedKeywords.Add(keyword);
             var ret = new NeedControllerType();
             ret.CopyFrom(this);
+            ret.expectedKeywords.Add(keyword);
             return ret; 
         }
 
@@ -414,9 +422,9 @@ namespace Jp.SOTMUtilities
         // A CardController must be specified with AccordingTo or Is because of implementation limitations.
         public NeedControllerType WithoutKeyword(string keyword)
         {
-            unwantedKeywords.Add(keyword);
             var ret = new NeedControllerType();
             ret.CopyFrom(this);
+            ret.unwantedKeywords.Add(keyword);
             return ret;
         }
 
@@ -451,9 +459,9 @@ namespace Jp.SOTMUtilities
             if (_controller == null)
                 throw new NullReferenceException("Null CardController supplied to AccordingTo()");
 
-            controller = _controller;
             var ret = new ControllerSuppliedType();
             ret.CopyFrom(this);
+            ret.controller = _controller;
             return ret;
         }
     };

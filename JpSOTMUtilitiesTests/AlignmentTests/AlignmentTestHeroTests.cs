@@ -558,5 +558,67 @@ namespace Jp.SOTMUtilities.UnitTest
             ClassicAssert.IsTrue(card.Is().Hero().Equipment().AccordingTo(controller));
             ClassicAssert.IsFalse(card.Is().Villain().Equipment().AccordingTo(controller));
         }
+
+        [Test()]
+        public void TestKeywords()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestHero");
+
+            var card = GetCard("HeroOngoing");
+            var controller = GetCardController(card);
+
+            ClassicAssert.IsTrue(card.Is().WithKeyword("ongoing").AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().WithKeyword("equipment").AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().WithKeyword("ongoing").WithKeyword("equipment").AccordingTo(controller));
+
+            ClassicAssert.IsFalse(card.Is().WithoutKeyword("ongoing").AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().WithoutKeyword("equipment").AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().WithoutKeyword("equipment").WithoutKeyword("ongoing").AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Hero().Ongoing().WithoutKeyword("equipment").AccordingTo(controller));
+
+            // TurnTakers don't have keywords, so they're excluded by both WithKeyword and WithoutKeyword.
+            ClassicAssert.IsFalse(legacy.TurnTaker.Is().WithKeyword("ongoing").AccordingTo(controller));
+            ClassicAssert.IsFalse(legacy.TurnTaker.Is().WithoutKeyword("ongoing").AccordingTo(controller));
+        }
+
+        [Test()]
+        public void TestModifiedDeckKindOnlyInPlay()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestHero");
+
+            var card = GetCard("HeroTargetInsistsItsVillainTarget");
+            var controller = GetCardController(card);
+
+            ClassicAssert.IsTrue(card.Is().Hero().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+
+            PlayCard(card);
+
+            ClassicAssert.IsFalse(card.Is().Hero().Target().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Villain().Target().AccordingTo(controller));
+
+            DestroyCard(card);
+
+            ClassicAssert.IsTrue(card.Is().Hero().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+        }
+
+        [Test()]
+        public void TestModifiedDeckKindBlank()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Jp.SOTMUtilities.TestMod.AlignmentTestHero");
+
+            var card = GetCard("HeroTargetInsistsItsVillainTarget");
+            var controller = GetCardController(card);
+            PlayCard(card);
+
+            // A blank card has no text, so this is just a hero target again.
+            card.SetIsBlank(true);
+
+            ClassicAssert.IsTrue(card.Is().Hero().AccordingTo(controller));
+            ClassicAssert.IsTrue(card.Is().Hero().Target().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().AccordingTo(controller));
+            ClassicAssert.IsFalse(card.Is().Villain().Target().AccordingTo(controller));
+        }
     }
 }

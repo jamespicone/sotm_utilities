@@ -122,6 +122,32 @@ namespace Jp.SOTMUtilities.UnitTest
         }
 
         [Test()]
+        public void TestNextRound()
+        {
+            SetupGameController("BaronBlade", "Legacy", "Tempest", "Megalopolis");
+
+            StartGame();
+
+            RemoveVillainTriggers();
+            RemoveVillainCards();
+
+            GoToEndOfTurn(legacy);
+
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsFalse(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+
+            // Phases from Legacy's previous turn don't count.
+            GoToStartOfTurn(legacy);
+
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.Start));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.PlayCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.UsePower));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.DrawCard));
+            ClassicAssert.IsTrue(legacy.IsTurnTakersTurnPriorToOrDuringPhase(Phase.End));
+        }
+
+        [Test()]
         public void TestWeirdPhaseOrder()
         {
             SetupGameController("BaronBlade", "LaComodora", "Tempest", "Megalopolis");
