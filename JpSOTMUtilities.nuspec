@@ -11,7 +11,7 @@
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/jamespicone/sotm_utilities</projectUrl>
     <description>$description$</description>
-    <releaseNotes>Updated for upcoming 4.0.5 release of Sentinels. Fixed a card alignment bug. Added an extension method to check if a card is responsible for card destruction.</releaseNotes>
+    <releaseNotes>Fixed card alignment helper bugs: Character()/Noncharacter() now correctly exclude TurnTakers; hero/villain target checks now respect AskPriority so Maze of Mirrors-like effects resolve correctly; builder methods no longer modify the helper they're called on, so stored helpers can be reused safely. Built against the Dec 2024 engine.</releaseNotes>
     <copyright>$copyright$</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.8" />
